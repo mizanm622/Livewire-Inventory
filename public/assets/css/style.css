@@ -1,0 +1,25 @@
+.right_col{
+    height: 100vh;
+  }
+
+span.required {
+    color: red;
+    font-size: 12px;
+}
+
+.nav_title a img {
+    background: #fff;
+    
+}
+.guarantor_area{
+    border-left: 2px solid;
+    height: 100%;
+}
+.customer_view_area {
+    margin-top: 15px;
+}
+.title {
+    font-size: 17px;
+    color: #000;
+    padding-left: 12px;
+}

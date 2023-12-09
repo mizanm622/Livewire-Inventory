@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Counter;
+use App\Livewire\Brand\Index;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -29,4 +30,7 @@ Route::middleware([
 
 
 Route::get('permisssion','App\Http\Controllers\HomeController@index');
-Route::get('/counter', Counter::class);
+
+Route::get('/brand', App\Livewire\Brand\Index::class)->name('brand');
+
+//Route::get('/counter', Counter::class);
