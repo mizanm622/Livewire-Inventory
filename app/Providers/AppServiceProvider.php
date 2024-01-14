@@ -19,6 +19,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        //months 
+        $months = ([
+            'January','February','March','April','May','June','July','August','September','October','November','December'
+        ]);
+        
+        //payment types
+        $payment_types = ([
+            'Bkash','Rocket','Nagad','Cash','Bank','Cheque','Card'
+        ]);
+      
+         view()->share('payment_types',$payment_types);
+         view()->share('months',$months);
     }
 }
