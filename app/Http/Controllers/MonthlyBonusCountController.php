@@ -250,9 +250,9 @@ class MonthlyBonusCountController extends Controller
         $data = [];
 
         if($request->filled('q')){
-            $data = Supplier::select("company_name", "id")
-                        ->where('company_name', 'LIKE', '%'. $request->get('q'). '%')
-                        ->get();
+            $data = Supplier::select("company_name", "mobile","address","id")
+            ->where('company_name', 'LIKE', '%'. $request->get('q'). '%')
+            ->get();
         }
         else
         {

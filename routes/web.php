@@ -1,15 +1,11 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Livewire\Counter;
-use App\Livewire\Brand\Index;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\BankExpenseController;
 use App\Http\Controllers\CarringExpenseController;
-use App\Http\Controllers\CustomerController;
-use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\CustomerDueController;
 use App\Http\Controllers\CustomerFollowUpdateController;
 use App\Http\Controllers\DokanExpenseController;
@@ -17,8 +13,8 @@ use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExpenseCategoryController;
 use App\Http\Controllers\ExpenseController;
 use App\Http\Controllers\LabourExpenseController;
-use App\Http\Controllers\MonthlyBonusCountController;
 use App\Http\Controllers\MonthlyBonusController;
+use App\Http\Controllers\MonthlyBonusCountController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\PriceGroupController;
 use App\Http\Controllers\ProductController;
@@ -30,12 +26,20 @@ use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ShowDueController;
 use App\Http\Controllers\SizeController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SupplierDueController;
 use App\Http\Controllers\SupplierFollowUpdateController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\YearlyBonusController;
+use App\Http\Controllers\YearlyBonusCountController;
+use App\Livewire\Brand\Index;
+use App\Livewire\Counter;
 use App\Livewire\Purchase\Checkout;
 use App\Models\CustomerFollowUpdate;
+use Illuminate\Support\Facades\Route;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -356,7 +360,20 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('bonus/delete/{id}', [MonthlyBonusCountController::class, 'delete'])->name('bonus.delete');
     Route::get('get-supplier',  [MonthlyBonusCountController::class, 'supplierSearch'])->name('supplier.search');
 
+    //yearly bonus count route
+    Route::get('yearly/bonus', [YearlyBonusCountController::class,'index'])->name('yearly.bonus.index');
+    Route::get('yearly/bonus/create', [YearlyBonusCountController::class, 'create'])->name('yearly.bonus.create');
+    Route::post('yearly/bonus', [YearlyBonusCountController::class, 'store'])->name('yearly.bonus.store');
+    Route::get('yearly/bonus/{id}/view', [YearlyBonusCountController::class, 'view'])->name('yearly.bonus.view');
+    Route::get('yearly/bonus/edit/{id}', [YearlyBonusCountController::class, 'edit'])->name('yearly.bonus.edit');
+    Route::post('yearly/bonus/update', [YearlyBonusCountController::class, 'update'])->name('yearly.bonus.update');
+    Route::get('yearly/bonus/delete/{id}', [YearlyBonusCountController::class, 'delete'])->name('yearly.bonus.delete');
+    Route::get('yearly/get-supplier',  [YearlyBonusCountController::class, 'supplierSearch'])->name('yearly.supplier.search');
+
     //monthly bonus route
-    Route::get('monthly/bonus', [MonthlyBonusController::class, 'index'])->name('monthly.bonus.index');
+    Route::get('monthly/bonus/list', [MonthlyBonusController::class, 'index'])->name('monthly.bonus.index');
+
+     //yearly bonus route
+    Route::get('yearly/bonus/list', [YearlyBonusController::class, 'show'])->name('yearly.bonus.show');
 
 });

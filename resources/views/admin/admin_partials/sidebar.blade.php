@@ -38,6 +38,7 @@
               <li><a href="#">Supplier Payment</a></li>
             </ul>
         </li>
+      
 
         <li><a><i class="fa fa-home"></i> Product <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
@@ -96,10 +97,12 @@
 
         <li><a><i class="fa fa-home"></i> Bonus Counting <span class="fa fa-chevron-down"></span></a>
             <ul class="nav child_menu">
-              <li><a href="{{route('bonus.create')}}">Bonus Counting Add</a></li>
-              <li><a href="{{route('bonus.index')}}">Bonus Counting List</a></li>
+              <li><a href="{{route('bonus.create')}}">Monthly Bonus Counting Add</a></li>
+              <li><a href="{{route('bonus.index')}}">Monthly Bonus Counting List</a></li>
               <li><a href="{{route('monthly.bonus.index')}}">Monthly Bonus</a></li>
-              <li><a href="#">Yearly Bonus</a></li>
+              <li><a href="{{route('yearly.bonus.create')}}">Yearly Bonus Counting Add</a></li>
+              <li><a href="{{route('yearly.bonus.index')}}">Yearly Bonus Counting List</a></li>
+              <li><a href="{{route('yearly.bonus.show')}}">Yearly Bonus</a></li>
               <li><a href="#">Total Bonus</a></li>
             </ul>
         </li>
@@ -186,8 +189,6 @@
         </li>
       </ul>
     </div>
-
-
   </div>
   <!-- End sidebar menu -->
 

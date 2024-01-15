@@ -40,7 +40,10 @@
 
      <!-- Custom CSS -->
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
-    @livewireStyles
+   {{-- select2 and css --}}
+   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+   @livewireStyles
   </head>
 
   <body class="nav-md">
@@ -92,6 +95,9 @@
       </div>
     </div>
 
+
+
+
     <!-- jQuery -->
     <script src="{{asset('assets/vendors/jquery/dist/jquery.min.js')}}"></script>
     <!-- Bootstrap -->
@@ -132,8 +138,6 @@
     <!-- bootstrap-daterangepicker -->
     <script src="{{asset('assets/vendors/moment/min/moment.min.js')}}"></script>
     <script src="{{asset('assets/vendors/bootstrap-daterangepicker/daterangepicker.js')}}"></script>
-
-
     <!---Data Table Scripts-->
     <script src="{{asset('assets/vendors/datatables.net/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{asset('assets/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
@@ -151,29 +155,101 @@
     <script src="{{asset('assets/vendors/pdfmake/build/pdfmake.min.js')}}"></script>
     <script src="{{asset('assets/vendors/pdfmake/build/vfs_fonts.js')}}"></script>
 
+     {{-- select2 js cdn--}}
+     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- Custom Theme Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <!-- Custom Theme Scripts -->
     <script src="{{asset('assets/build/js/custom.min.js')}}"></script>
 
     <script>
-         $(document).on('click','#delete', function(e){
+      
+        // this is for laravel blade
+        $(document).on('click','#delete', function(e){
         e.preventDefault();
         var link =$(this).attr('href');
-        swal({
-            title: 'Are you want to delete?',
-             text: 'Once Delete, This will be parmanently delete',
-             icon: 'warning',
-             button: true,
-             dangerMode: true,
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+        }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = link;
+            swalWithBootstrapButtons.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+            });
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your imaginary file is safe :)",
+            icon: "error"
+            });
+        }
+        });
+    });
 
-        }) .then((willDelete) => {
-            if(willDelete){
-                window.location.href = link;
-            }else{
-                swal('Safe Data!');
+    
+    //this is for livewire component
+    window.addEventListener('show-delete-message', event =>{
+        $(document).ready(function(){
+
+        const swalWithBootstrapButtons = Swal.mixin({
+        customClass: {
+            confirmButton: "btn btn-success",
+            cancelButton: "btn btn-danger"
+        },
+        buttonsStyling: false
+        });
+        swalWithBootstrapButtons.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, delete it!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true
+        }).then((result) => {
+            if (result.isConfirmed) {
+            Livewire.dispatch('deleteConfirmed')
+            //Livewire.emit('deleteConfirmed');
+            }
+            else if (result.dismiss === Swal.DismissReason.cancel)
+            {
+                swalWithBootstrapButtons.fire({
+                title: "Cancelled",
+                text: "Your imaginary file is safe :)",
+                icon: "error"
+                });
             }
         });
 
     });
+
+    window.addEventListener('deleted', event =>{
+        swalWithBootstrapButtons.fire({
+            title: "Deleted!",
+            text: "Your file has been deleted.",
+            icon: "success"
+            });
+
+    });
+});
 
     </script>
     {{-- alert notification --}}
@@ -181,13 +257,16 @@
         <script >
             var type ="{{Session::get('alert-type','info')}}";
             switch(type){
-                    case 'info':
+              case 'info':
                     toastr.info("{{Session::get('msg')}}");
                     break;
                     case 'success':
                     toastr.success("{{Session::get('msg')}}");
                     break;
                     case 'warning':
+                    toastr.warning("{{Session::get('msg')}}");
+                    break;
+                    case 'danger':
                     toastr.warning("{{Session::get('msg')}}");
                     break;
                     case 'error':
