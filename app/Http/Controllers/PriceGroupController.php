@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\PriceGroup;
+use App\Models\PriceGroupProduct;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class PriceGroupController extends Controller
@@ -24,7 +26,7 @@ class PriceGroupController extends Controller
             'name' => [  'max:255'],
             'description' => [ 'max:1000'],
             'remarks' => [ 'max:255'],
-           
+
         ]);
 
         PriceGroup::insert([
@@ -51,9 +53,9 @@ class PriceGroupController extends Controller
             'name' => [ 'max:255'],
             'description' => [ 'max:1000'],
             'remarks' => [ 'max:255'],
-           
+
         ]);
-        
+
         PriceGroup::where('id',$request->id)->update([
             'name' => $request->name,
             'description' => $request->description,
@@ -66,9 +68,57 @@ class PriceGroupController extends Controller
 
     }
 
+    // add price group product
+    public function add($id)
+    {
+        $price_group = PriceGroup::where('id',$id)->first();
+        $products = Product::get();
+
+        return view('admin.price_group.add', get_defined_vars());
+
+    }
+     //   price group wise product store
+    public function storeProduct(Request $request)
+    {
+
+        //dd($request->all());
+
+        $request->validate([
+            'price_group_id' => 'required',
+            'product_id' => 'required',
+            'price_group_rate' => 'required',
+        ]);
+
+        $product_id = $request->product_id;
+        $price_group_rate = array_values(array_filter(array_map('trim',  $request->price_group_rate), 'strlen'));
+
+       //dd( $product_id,  $price_group_rate);
+
+
+       for($i = 0; $i< count($product_id); $i++)
+       {
+
+        PriceGroupProduct::updateOrCreate(
+                    ['price_group_id' =>$request->price_group_id ,'product_id' =>$product_id[$i]] ,
+                        ['price_group_rate' =>$price_group_rate[$i]]
+                );
+       }
+       
+
+        $alert = array('msg' => 'Price Group Product Successfully Inserted', 'alert-type' => 'success');
+        return redirect()->back()->with($alert);
+
+    }
+
+    public function show($id)
+    {
+        $products = PriceGroupProduct::where('price_group_id',$id)->get();
+        return view('admin.price_group.show', get_defined_vars());
+    }
+
     public function delete($id)
     {
-       
+
         PriceGroup::where('id',$id)->delete();
 
         $alert = array('msg' => 'Price Group Successfully Deleted', 'alert-type' => 'warning');

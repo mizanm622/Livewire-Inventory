@@ -148,13 +148,16 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('warehouse/delete/{id}', [WarehouseController::class, 'delete'])->name('warehouse.delete');
     Route::get('warehouse/{id}/{status}', [WarehouseController::class, 'status'])->name('warehouse.status');
 
-    //price group route
-    Route::get('price_group', [PriceGroupController::class, 'index'])->name('price_group.index');
-    Route::get('price_group/create', [PriceGroupController::class, 'create'])->name('price_group.create');
-    Route::post('price_group', [PriceGroupController::class, 'store'])->name('price_group.store');
-    Route::get('price_group/edit/{id}', [PriceGroupController::class, 'edit'])->name('price_group.edit');
-    Route::post('price_group/update', [PriceGroupController::class, 'update'])->name('price_group.update');
-    Route::get('price_group/delete/{id}', [PriceGroupController::class, 'delete'])->name('price_group.delete');
+     //price group route
+     Route::get('price_group', [PriceGroupController::class, 'index'])->name('price_group.index');
+     Route::get('price_group/create', [PriceGroupController::class, 'create'])->name('price_group.create');
+     Route::post('price_group', [PriceGroupController::class, 'store'])->name('price_group.store');
+     Route::get('price_group/edit/{id}', [PriceGroupController::class, 'edit'])->name('price_group.edit');
+     Route::get('price_group/add-product/{id}', [PriceGroupController::class, 'add'])->name('price_group.add');
+     Route::post('price_group/store-product', [PriceGroupController::class, 'storeProduct'])->name('price_group.store.product');
+     Route::get('price_group/show/{id}', [PriceGroupController::class, 'show'])->name('price_group.show');
+     Route::post('price_group/update', [PriceGroupController::class, 'update'])->name('price_group.update');
+     Route::get('price_group/delete/{id}', [PriceGroupController::class, 'delete'])->name('price_group.delete');
 
     //price group route
     Route::get('bank', [BankController::class, 'index'])->name('bank.index');
