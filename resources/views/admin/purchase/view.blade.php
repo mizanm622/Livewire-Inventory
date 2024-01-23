@@ -8,7 +8,7 @@ Purchase View
 <div class="col-md-12 col-sm-12">
     <div class="x_panel">
         <div class="x_title">
-                <h2> <a href="{{route('purchase.index')}}" class="btn btn-md btn-primary">Purchase Invoice</a> Purchase Invoice<small>Show Purchase Invoice from here</small></h2>
+                <h2> <a href="{{route('purchase.index')}}" class="btn btn-md btn-primary">Purchase Invoice</a> <a href="{{route('purchase.invoice')}}" class="btn btn-info">Download Pdf</a>  Purchase Invoice<small>Show Purchase Invoice from here</small></h2>
                 <ul class="nav navbar-right panel_toolbox">
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>

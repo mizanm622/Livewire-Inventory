@@ -159,6 +159,7 @@ return [
         /*
          * Package Service Providers...
          */
+        Barryvdh\DomPDF\ServiceProvider::class,
         Gloudemans\Shoppingcart\ShoppingcartServiceProvider::class,
         /*
          * Application Service Providers...
@@ -184,7 +185,8 @@ return [
     */
 
     'aliases' => Facade::defaultAliases()->merge([
-        // 'Example' => App\Facades\Example::class,
+        // 'Example' => App\Facades\Example::class, 
+        'PDF' => Barryvdh\DomPDF\Facade\PDF::class,
         'Cart' => Gloudemans\Shoppingcart\Facades\Cart::class,
     ])->toArray(),
 

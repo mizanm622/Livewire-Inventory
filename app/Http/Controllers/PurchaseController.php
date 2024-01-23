@@ -12,6 +12,8 @@ use App\Models\Supplier;
 use App\Models\Warehouse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
+use Barryvdh\DomPDF\Facade\PDF;
+
 
 class PurchaseController extends Controller
 {
@@ -308,6 +310,18 @@ class PurchaseController extends Controller
     public function testCart()
     {
         return view('admin.purchase.test');
+    }
+
+    public function pdfGenerator()
+    {
+        
+        //$supplier_info = PurchaseSupplierInfo::where('invoice_no',$invoice)->first();
+        //$products = PurchaseProduct::where('invoice_no',$invoice)->get();
+        $pdf = PDF::loadView('dashboard');
+        return $pdf->download('bc.pdf');
+        // return $pdf->stream(); 
+        
+       // return view('admin.purchase.invoice',get_defined_vars());
     }
     
 

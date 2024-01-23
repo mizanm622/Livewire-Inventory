@@ -195,6 +195,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
      Route::get('product/gallery', [ProductController::class, 'gallery'])->name('product.gallery');
 
     //purchase route
+    Route::get('purchase/invoice', [PurchaseController::class, 'pdfGenerator'])->name('purchase.invoice');
     Route::get('purchase', [PurchaseController::class, 'index'])->name('purchase.index');
     Route::get('purchase/create', [PurchaseController::class, 'create'])->name('purchase.create');
     Route::post('purchase', [PurchaseController::class, 'sessionStore'])->name('session.store');
