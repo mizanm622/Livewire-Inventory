@@ -33,55 +33,62 @@
                     @endif
                 <div class="col-lg-12 col-md-12 col-sm-12">
                     <form wire:submit.prevent=supplierDueSearch()>
-                        <div class="row ">
-                            <div class="col-lg-3 col-md-3 col-sm-12">
-                                <div class="supplier-search-area">
-                                    <label for="supplier_search">Start Date:</label>
-                                    <div class="form-group">
-                                      <input type="date" name="start_date" wire:model="start_date" class="form-control">
+                        <div class="col-lg-12 col-md-12 col-sm-12 offset-md-2 offset-lg-2">
+                            <div class="row">
+                                <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <div class="supplier-search-area">
+                                        {{-- <label for="supplier_search">Start Date:</label> --}}
+                                        <div class="form-group">
+                                        <input type="date" name="start_date" wire:model="start_date" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12">
-                                <div class="supplier-search-area">
-                                    <label for="supplier_search">Start Date:</label>
-                                    <div class="form-group">
-                                      <input type="date" name="end_date" wire:model="end_date" class="form-control">
+                                <div class="col-lg-2 col-md-2 col-sm-12">
+                                    <div class="supplier-search-area">
+                                        {{-- <label for="supplier_search">End Date:</label> --}}
+                                        <div class="form-group">
+                                        <input type="date" name="end_date" wire:model="end_date" class="form-control">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="col-lg-3 col-md-3 col-sm-12">
-                                <div class="supplier-search-area">
-                                    <label for="supplier_search">Search Due Supplier:</label>
-                                    <div class="form-group" wire:ignore>
-                                        <select type="search" id="due_supplier_search"   name="get_supplier_id" placeholder="search supplier" class="form-control">
-                                            <option value=""></option>
-                                            @foreach ($suppliers as $supplier)
-                                                <option value="{{$supplier->id}}">
-                                                    {{$supplier->company_name}} |
-                                                    {{$supplier->address}}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-6 col-md-6 col-sm-12">
-                                <div class="supplier-search-button pt-4">
-                                    <div class="form-group">
-                                        <button type="submit" class="btn btn-success">Search</button>
-                                        <button type="button" wire:click="resetSupplier" class="btn btn-danger">Reset</button>
+                                <div class="col-lg-3 col-md-3 col-sm-12">
+                                    <div class="supplier-search-area">
+                                        {{-- <label for="supplier_search">Select Supplier:</label> --}}
+                                        <div class="form-group" wire:ignore>
+                                            <select type="search" id="due_supplier_search"   name="get_supplier_id" placeholder="search supplier" class="form-control">
+                                                <option value=""></option>
+                                                @foreach ($suppliers as $supplier)
+                                                    <option value="{{$supplier->id}}">
+                                                        {{$supplier->company_name}} -
+                                                        {{$supplier->address}}
+                                                    </option>
+                                                @endforeach
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
+                                <div class="col-lg-1 col-md-1 col-sm-6">
+                                    <div class="supplier-search-button">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-success">Search</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-1 col-md-1 col-sm-6">
+                                    <div class="supplier-search-button">
+                                        <div class="form-group">
+                                            <button type="button" wire:click="resetSupplier" class="btn btn-danger">Reset</button>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </form>
                     <div class="row">
                         <div class="col-lg-12 col-md-12 col-sm-12">
                             <div class="due-list-area mt-4">
-                               
+
                                 @if(count($bonuses) > 0)
                                 <div class="x_title">
 

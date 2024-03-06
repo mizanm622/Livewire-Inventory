@@ -66,7 +66,7 @@
                                                             <option value=""></option>
                                                             @foreach ($products as $product)
                                                                 <option value="{{$product->id}}">
-                                                                    {{$product->name}} |
+                                                                    {{$product->name}} -
                                                                     {{$product->brand->name}}
                                                                 </option>
                                                             @endforeach
@@ -82,7 +82,7 @@
                                                             <option value=""></option>
                                                             @foreach ($customers as $customer)
                                                                 <option value="{{$customer->id}}">
-                                                                    {{$customer->name}} |
+                                                                    {{$customer->name}} -
                                                                     {{$customer->address}}
                                                                 </option>
                                                             @endforeach

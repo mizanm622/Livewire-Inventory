@@ -78,7 +78,7 @@ Employee List
                                         @endif
                                         @if(empty($employee->others_amount))
                                         <td></td>
-                                        @else                                     
+                                        @else
                                         <td class="text-right">{{$employee->others_amount}}/-</td>
                                         @endif
                                         @if(empty($employee->security))
@@ -86,7 +86,17 @@ Employee List
                                         @else
                                         <td>{{$employee->security}}</td>
                                         @endif
-                                        <td> <a href="{{route('employee.edit',$employee->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a> <a href="{{route('employee.delete',$employee->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a> <a href="{{route('employee.view',$employee->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a> </td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li> <a href="{{route('employee.edit',$employee->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a></li>
+                                                    <li><a href="{{route('employee.delete',$employee->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a></i></a></li>
+                                                    <li><a href="{{route('employee.view',$employee->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a> </td></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

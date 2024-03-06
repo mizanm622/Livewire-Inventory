@@ -29,8 +29,18 @@ class CarringExpenseController extends Controller
             'driver_name' => ['max:100'],
             'payment_amount' => ['max:100'],
             'remarks' => ['max:1000'],
-           
+
         ]);
+
+        $voucher_no = CarringExpense::orderBy('id','DESC')->first();
+        if(!$voucher_no)
+        {
+            $voucher_no= 01;
+        }
+        else
+        {
+            $voucher_no = $voucher_no->voucher_no+1;
+        }
 
         CarringExpense::insert([
             'date' => $request->date,
@@ -50,7 +60,7 @@ class CarringExpenseController extends Controller
     }
     public function edit($id)
     {
-       
+
         $carring_expense = CarringExpense::where('id',$id)->first();
 
         return view('admin.expense.carring.edit', get_defined_vars());
@@ -67,9 +77,9 @@ class CarringExpenseController extends Controller
             'driver_name' => ['max:100'],
             'payment_amount' => ['max:100'],
             'remarks' => ['max:1000'],
-           
+
         ]);
-        
+
         CarringExpense::where('id',$request->id)->update([
             'date' => $request->date,
             'voucher_no' => $request->voucher_no,
@@ -79,7 +89,7 @@ class CarringExpenseController extends Controller
             'driver_name' => $request->driver_name,
             'payment_amount' => $request->payment_amount,
             'remarks' => $request->remarks,
-            
+
         ]);
 
         $alert = array('msg' => 'Carring Expense Successfully Update', 'alert-type' => 'info');
@@ -89,7 +99,7 @@ class CarringExpenseController extends Controller
 
     public function delete($id)
     {
-       
+
         CarringExpense::where('id',$id)->delete();
         $alert = array('msg' => 'Carring Expense Successfully Deleted', 'alert-type' => 'warning');
         return redirect()->route('carring.expense.index')->with($alert);

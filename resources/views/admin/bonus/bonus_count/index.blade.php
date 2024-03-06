@@ -84,7 +84,17 @@ Bonus Count List
                                         <td class="text-center">{{$rate->ton_181_to_ton_190_rate}}</td>
                                         <td class="text-center">{{$rate->ton_191_to_ton_200_rate}}</td>
                                         <td class="text-center">{{$rate->ton_201_to_ton_210_rate}}</td>
-                                        <td> <a href="{{route('bonus.edit',$rate->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a> <a href="{{route('bonus.delete',$rate->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a><a href="{{route('bonus.view',$rate->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="{{route('bonus.edit',$rate->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a></li>
+                                                    <li><a href="{{route('bonus.delete',$rate->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a></li>
+                                                    <li><a href="#" class="btn btn-info"><i class="fa fa-eye" ></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

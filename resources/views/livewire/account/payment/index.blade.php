@@ -42,7 +42,7 @@
                                             <option value=""></option>
                                             @foreach ($suppliers as $supplier)
                                                 <option value="{{$supplier->id}}">
-                                                    {{$supplier->company_name}} |
+                                                    {{$supplier->company_name}} -
                                                     {{$supplier->address}}
                                                 </option>
                                             @endforeach
@@ -55,11 +55,11 @@
                             <div class="collection-form-area d-flex justify-content-center">
                                 <div class="col-lg-2 col-md-2 col-sm-12">
                                     <div class="form-group">
-                                        <label for="supplier_name">Supplier ID:</label>
+                                        <label class="d-block border py-1" for="supplier_name">Supplier ID:</label>
                                         <input type="text"  name="supplier_id"  wire:model="supplier_id" class="form-control">
                                     </div>
                                     <div class="form-group ">
-                                        <label class="" for="date">Date:</label>
+                                        <label class="d-block border py-1" class="" for="date">Date:</label>
                                             <input id="date" name="date" wire:model="date" class="date-picker form-control" placeholder="dd-mm-yyyy" type="text"  type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
                                             <script>
                                                 function timeFunctionLong(input) {
@@ -69,41 +69,41 @@
                                                 }
                                             </script>
                                     </div>
-        
-                                    
+
+
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-12">
                                     <div class="form-group">
-                                        <label for="supplier_name">Supplier Name:</label>
+                                        <label class="d-block border py-1" for="supplier_name">Supplier Name:</label>
                                         <input type="text"  name="supplier_name"   wire:model="supplier_name" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label for="supplier_name">Voucher No:</label>
+                                        <label class="d-block border py-1" for="supplier_name">Voucher No:</label>
                                         <input type="text"  name="invoice_no"  wire:model="invoice_no" class="form-control">
                                     </div>
 
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-12">
                                     <div class="form-group">
-                                        <label for="supplier_name">Address:</label>
+                                        <label class="d-block border py-1" for="supplier_name">Address:</label>
                                         <input type="text"  name="address"  wire:model="address" class="form-control">
                                     </div>
                                     <div class="form-group">
-                                        <label  for="prepare">Paying By:</label>
+                                        <label class="d-block border py-1" for="prepare">Paying By:</label>
                                         @if(isset($bank_title))
-                                    
+
                                         @else
-                                            <select type="text" wire:model="payment_by" wire:change="paymentSearch($event.target.value)"  name="payment_by"  class="form-control">  
+                                            <select type="text" wire:model="payment_by" wire:change="paymentSearch($event.target.value)"  name="payment_by"  class="form-control">
                                                 <option value="">Select Option</option>
                                                     @foreach($payment_types as $payment_type)
                                                         <option value="{{$payment_type}}">{{$payment_type}}</option>
                                                     @endforeach
                                             </select>
-                                        
+
                                         @endif
                                         @if(isset($bank_list))
                                             @if($bank_list == 1)
-                                                <select type="text" wire:model="bank_title" wire:change="paymentSearch($event.target.value)"  name="payment_by"  class="form-control">  
+                                                <select type="text" wire:model="bank_title" wire:change="paymentSearch($event.target.value)"  name="payment_by"  class="form-control">
                                                     <option value="">Select Option</option>
                                                         @foreach($banks as $bank)
                                                             <option value="{{$bank->title}}">{{$bank->title}}</option>
@@ -113,49 +113,49 @@
                                                 <input type="text" wire:model="bank_title" class="form-control">
 
                                             @else
-                                                
+
 
                                             @endif
                                         @endif
                                     </div>
-                                    
+
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-12">
                                     <div class="form-group">
-                                        <label for="supplier_name">Mobile:</label>
+                                        <label class="d-block border py-1" for="supplier_name">Mobile:</label>
                                         <input type="text"  name="mobile"  wire:model="mobile" class="form-control">
                                     </div>
-        
+
                                     <div class="form-group">
-                                        <label  for="prepare">Remarks:</label>
+                                        <label class="d-block border py-1" for="prepare">Remarks:</label>
                                         <textarea type="text" name="remarks" wire:model="remarks" id="transport_no" class="form-control" cols="5" rows="2"></textarea>
                                     </div>
-                                    
+
                                 </div>
                                 <div class="col-lg-2 col-md-2 col-sm-12">
                                     <div class="form-group">
-                                        <label for="supplier_name">Total Due:</label>
+                                        <label class="d-block border py-1" for="supplier_name">Total Due:</label>
                                         <input type="text"  name="previous_due"  value="{{  $previous_due ?? -$advance_payment  }}" class="form-control">
                                     </div>
-        
-                                    
+
+
                                     <div class="form-group">
-                                        <label  for="prepare">Amount:</label>
+                                        <label class="d-block border py-1" for="prepare">Amount:</label>
                                         <input type="text" name="payment" wire:model.lazy="payment" id="payment" class="form-control">
                                     </div>
-                                    
+
                                     @if($advance_payment || empty($previous_due))
                                         <div class="form-group">
-                                            <label  for="prepare">Due Amount:</label>
+                                            <label class="d-block border py-1" for="prepare">Due Amount:</label>
                                             <input type="text" name="current_due" readonly value="{{-$current_due}}" id="current_due" class="form-control">
                                         </div>
                                     @else
                                         <div class="form-group">
-                                            <label  for="prepare">Due Amount:</label>
+                                            <label class="d-block border py-1" for="prepare">Due Amount:</label>
                                             <input type="text" name="current_due" readonly value="{{$current_due}}" id="current_due" class="form-control">
                                         </div>
                                     @endif
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -179,11 +179,13 @@
 <script>
 
     $(document).ready(function () {
-       $('#payment-supplier-search').select2();
+       $('#payment-supplier-search').select2({
+        placeholder: 'Select Supplier from here',
+       });
        $('#payment-supplier-search').on('change', function (e) {
             @this.searchSupplier(e.target.value);
        });
-    }); 
+    });
     </script>
-    
+
 @endpush

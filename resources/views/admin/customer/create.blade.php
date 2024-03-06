@@ -44,7 +44,7 @@ Customer Add
                     <form action="{{route('customer.store')}}" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         @csrf
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12"> 
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="name">Customer Name <span class=""></span>
                                     </label>
@@ -108,7 +108,7 @@ Customer Add
                                         <input type="text" id="phone" name="phone"  class="form-control">
                                     </div>
                                 </div>
-                                
+
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="photo">Customer Photo <span class=""></span>
                                     </label>
@@ -117,7 +117,7 @@ Customer Add
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12"> 
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">Email<span class=""></span>
                                     </label>
@@ -138,9 +138,16 @@ Customer Add
                                     <div class="col-md-6 col-sm-6">
                                       <select name="price_group" id="price_group"  class="form-control">
                                         @foreach ($price_groups as $price_group)
-                                        <option value="{{$price_group->name}}">{{$price_group->name}}</option>
+                                        <option value="{{$price_group->id}}">{{$price_group->name}}</option>
                                        @endforeach
                                       </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group ">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="security">Type<span class=""></span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input type="text" id="type" name="type"  class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group ">
@@ -192,14 +199,14 @@ Customer Add
                                     <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                                         <div class="panel-body">
                                             <div class="row">
-                                                <div class="col-lg-6 col-md-6 col-sm-12"> 
+                                                <div class="col-lg-6 col-md-6 col-sm-12">
                                                     <div class="item form-group ">
                                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_name">Guarantor Name<span class=""></span>
                                                         </label>
                                                         <div class="col-md-6 col-sm-6">
                                                             <input type="text" id="guarantor_name" name="guarantor_name"  class="form-control">
                                                         </div>
-                                                    </div> 
+                                                    </div>
                                                     <div class="item form-group ">
                                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_company_name">Company Name<span class=""></span>
                                                         </label>
@@ -251,7 +258,7 @@ Customer Add
                                                             <input type="text" id="guarantor_mobile" name="guarantor_mobile"  class="form-control">
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="item form-group ">
                                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_phone">Phone Number<span class=""></span>
                                                         </label>
@@ -259,7 +266,7 @@ Customer Add
                                                             <input type="text" id="guarantor_phone" name="guarantor_phone"  class="form-control">
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="item form-group ">
                                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_email">Email<span class=""></span>
                                                         </label>
@@ -267,7 +274,7 @@ Customer Add
                                                             <input type="email" id="guarantor_email" name="guarantor_email" class="form-control">
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="item form-group ">
                                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_security">Security<span class=""></span>
                                                         </label>
@@ -275,7 +282,7 @@ Customer Add
                                                             <input type="text" id="guarantor_security" name="guarantor_security"  class="form-control">
                                                         </div>
                                                     </div>
-                                                    
+
                                                     <div class="item form-group ">
                                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_remarks">Remarks<span class=""></span>
                                                         </label>
@@ -290,7 +297,7 @@ Customer Add
                                                             <input type="file" id="guarantor_photo" name="guarantor_photo"  class="dropify form-control">
                                                         </div>
                                                     </div>
-                                                
+
                                                 </div>
                                             </div>
 
@@ -300,7 +307,7 @@ Customer Add
                             </div>
                             <!-- end of accordion -->
                         </div>
-                    
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-12 offset-md-3 text-center">

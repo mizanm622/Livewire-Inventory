@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Payment;
+use App\Models\PurchaseProduct;
+use App\Models\PurchaseSupplierInfo;
 use App\Models\Supplier;
+use App\Models\SupplierDue;
 use Illuminate\Http\Request;
 
 class SupplierController extends Controller
@@ -38,9 +42,9 @@ class SupplierController extends Controller
             'previous_due' => ['max:20'],
             'remarks' => ['max:500'],
             'photo' =>  ['image','mimes:jpeg,png,jpg,gif,svg','max:1000'],
-          
+
         ]);
-        
+
         if(!empty($request->photo))
         {
         $photo = $request->photo;
@@ -70,7 +74,7 @@ class SupplierController extends Controller
             'previous_due' => $request->previous_due,
             'remarks' => $request->remarks,
             'photo' => $photo_path,
-            
+
         ]);
 
         $alert = array('msg' => 'Supplier Successfully Inserted', 'alert-type' => 'success');
@@ -104,7 +108,7 @@ class SupplierController extends Controller
             'previous_due' => ['max:20'],
             'remarks' => ['max:500'],
             'photo' =>  ['image','mimes:jpeg,png,jpg,gif,svg','max:1000'],
-          
+
         ]);
 
         if(!empty($request->photo))
@@ -127,8 +131,8 @@ class SupplierController extends Controller
             {
                 $photo_path = "";
             }
-           
-        } 
+
+        }
 
         Supplier::where('id',$request->id)->update([
             'owner_name' => $request->owner_name,
@@ -148,7 +152,7 @@ class SupplierController extends Controller
             'previous_due' => $request->previous_due,
             'remarks' => $request->remarks,
             'photo' => $photo_path,
-            
+
         ]);
 
         $alert = array('msg' => 'Supplier Successfully Updated', 'alert-type' => 'info');
@@ -169,7 +173,7 @@ class SupplierController extends Controller
         $alert = array('msg' => 'Supplier Successfully Deleted', 'alert-type' => 'warning');
         return redirect()->route('supplier.index')->with($alert);
     }
-    
+
     public function view($id)
     {
         $supplier = Supplier::where('id',$id)->first();
@@ -179,14 +183,41 @@ class SupplierController extends Controller
     public function status($id, $status)
     {
 
-       
+
         Supplier::where('id',$id)->update(['status' => $status == 1 ? 0 : 1]);
 
         $alert = array('msg' => 'Supplier Status Successfully Updated', 'alert-type' => 'info');
         return redirect()->route('supplier.index')->with($alert);
-       
+
     }
 
+    // due show from here
+    public function due()
+    {
+        return view('admin.supplier.due');
 
+    }
+
+    public function ledger($id)
+    {
+        
+        $supplier = Supplier::where('id',$id)->first();
+        $reports = PurchaseSupplierInfo::where('supplier_id',$id)->get();
+        $products = PurchaseProduct::where('supplier_id',$id)->get();
+        $payments = Payment::where('supplier_id',$id)->get();
+        $dues = SupplierDue::where('supplier_id',$id)->get();
+        return view('admin.supplier.ledger',get_defined_vars());
+
+    }
+    public function statement($id)
+    {
+
+        $supplier = Supplier::where('id',$id)->first();
+        $reports = PurchaseSupplierInfo::where('supplier_id',$id)->get();
+        $products = PurchaseProduct::where('supplier_id',$id)->get();
+        $payments = Payment::where('supplier_id',$id)->get();
+        $dues = SupplierDue::where('supplier_id',$id)->get();
+        return view('admin.supplier.statement',get_defined_vars());
+    }
 
 }

@@ -103,7 +103,13 @@ class PriceGroupController extends Controller
                         ['price_group_rate' =>$price_group_rate[$i]]
                 );
        }
-       
+        // foreach( $groups as $value)
+        // {
+        //     PriceGroupProduct::updateOrCreate(
+        //         ['price_group_id' =>$request->group_id , 'product_id' =>$value->product_id ],
+        //         ['group_price_rate' =>$value->price_group_rate]
+        //     );
+        // }
 
         $alert = array('msg' => 'Price Group Product Successfully Inserted', 'alert-type' => 'success');
         return redirect()->back()->with($alert);

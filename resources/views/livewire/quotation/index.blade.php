@@ -193,7 +193,17 @@
                                         <td class="text-center">{{$quotation->productGroup->name}}</td>
                                         <td class="text-wrap">{{$quotation->quantity}}</td>
                                         <td class="text-wrap">{{$quotation->remarks}}</td>
-                                        <td> <a href="#" wire:click="edit('{{$quotation->id}}')" class="btn btn-success" data-toggle="modal" data-target=".update-modal"><i class="fa fa-edit" ></i></a> <button  wire:click="delete({{$quotation->id}})" class="btn btn-danger"><i class="fa fa-trash" ></i></button><a href="{{route('quotation.view',$quotation->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li> <a href="#" wire:click="edit('{{$quotation->id}}')" class="btn btn-success" data-toggle="modal" data-target=".update-modal"><i class="fa fa-edit" ></i></a></li>
+                                                    <li> <button  wire:click="delete({{$quotation->id}})" class="btn btn-danger"><i class="fa fa-trash" ></i></button></li>
+                                                    <li><a href="{{route('quotation.view',$quotation->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

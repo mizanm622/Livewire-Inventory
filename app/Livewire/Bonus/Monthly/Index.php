@@ -40,7 +40,7 @@ class Index extends Component
     {
         $this->reset('bonus');
         MonthlyBonus::truncate();
-      
+
 
     }
 
@@ -138,6 +138,10 @@ class Index extends Component
            elseif($this->total_ton >= $bonus_count->ton_101 && $this->total_ton <= $bonus_count->ton_110)
            {
             $this-> commission_rate =$bonus_count->ton_101_to_ton_110_rate;
+           }
+           elseif($this->total_ton >= $bonus_count->ton_111 && $this->total_ton <= $bonus_count->ton_120)
+           {
+            $this-> commission_rate =$bonus_count->ton_111_to_ton_120_rate;
            }
            elseif($this->total_ton >= $bonus_count->ton_121 && $this->total_ton <= $bonus_count->ton_130)
            {

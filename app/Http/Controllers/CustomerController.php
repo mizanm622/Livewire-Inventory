@@ -2,16 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Collection;
 use App\Models\customer;
+use App\Models\CustomerDue;
 use App\Models\PriceGroup;
+use App\Models\SalesCustomerInfo;
+use App\Models\SalesProduct;
+use Illuminate\Http\Request;
 
 class CustomerController extends Controller
 {
     public function index()
     {
         $customers = customer::latest()->get();
-        
+
         return view('admin.customer.index',get_defined_vars());
     }
 
@@ -34,7 +38,8 @@ class CustomerController extends Controller
             'nid' => ['max:20'],
             'birthday' => ['max:10'],
             'ledger_page' => ['max:100'],
-            'price_group' => ['max:255'],
+            'type' => ['max:255'],
+            'price_group_id' => ['max:11'],
             'security' => ['max:255'],
             'credit_limit' => ['max:20'],
             'advance_payment' => ['max:20'],
@@ -54,7 +59,7 @@ class CustomerController extends Controller
             'guarantor_photo' =>  ['image','mimes:jpeg,png,jpg,gif,svg','max:1000'],
 
         ]);
-        
+
         if(empty($request->photo)){
             $photo_path = "";
         }
@@ -63,18 +68,18 @@ class CustomerController extends Controller
         $photo = $request->photo;
         $photoName = uniqid().'.'.$photo->getClientOriginalExtension();
         $photo_path = $photo->move('images/customer/',$photoName);
-        } 
+        }
         if(empty($request->guarantor_photo)){
             $guarantor_photo_path = "";
         }
         else
         {
-         
+
         $guarantor_photo = $request->guarantor_photo;
         $guarantor_photoName = uniqid().'.'.$guarantor_photo->getClientOriginalExtension();
         $guarantor_photo_path = $guarantor_photo->move('images/customer/',$guarantor_photoName);
         }
-        
+
 
 
         customer::insert([
@@ -88,11 +93,13 @@ class CustomerController extends Controller
             'nid' => $request->nid,
             'birthday' => $request->birthday,
             'ledger_page' => $request->ledger_page,
-            'price_group' => $request->price_group,
+            'type' => $request->type,
+            'price_group_id' => $request->price_group,
             'security' => $request->security,
             'advance_payment' => $request->advance_payment,
             'credit_limit' => $request->credit_limit,
             'previous_due' => $request->previous_due,
+            'opening_balance' => $request->previous_due ?? $request->advance_payment,
             'remarks' => $request->remarks,
             'photo' => $photo_path,
             'guarantor_name' => $request->guarantor_name,
@@ -116,9 +123,9 @@ class CustomerController extends Controller
 
     public function edit($id)
     {
-       
-        $customer = customer::where('id',$id)->first();
 
+        $customer = customer::where('id',$id)->first();
+        $price_groups = PriceGroup::get();
         return view('admin.customer.edit',get_defined_vars());
     }
 
@@ -134,7 +141,8 @@ class CustomerController extends Controller
             'nid' => ['max:20'],
             'birthday' => ['max:10'],
             'ledger_page' => ['max:100'],
-            'price_group' => ['max:255'],
+            'type' => ['max:255'],
+            'price_group_id' => ['max:11'],
             'security' => ['max:255'],
             'credit_limit' => ['max:20'],
             'advance_payment' => ['max:20'],
@@ -174,8 +182,8 @@ class CustomerController extends Controller
             {
                 $photo_path = "";
             }
-        } 
-        
+        }
+
         if(!empty($request->photo))
         {
             $guarantor_photo = $request->guarantor_photo;
@@ -197,7 +205,7 @@ class CustomerController extends Controller
                 $guarantor_photo_path = "";
             }
 
-            
+
         }
 
         customer::where('id',$request->id)->update([
@@ -211,7 +219,8 @@ class CustomerController extends Controller
             'nid' => $request->nid,
             'birthday' => $request->birthday,
             'ledger_page' => $request->ledger_page,
-            'price_group' => $request->price_group,
+            'type' => $request->type,
+            'price_group_id' => $request->price_group,
             'security' => $request->security,
             'advance_payment' => $request->advance_payment,
             'credit_limit' => $request->credit_limit,
@@ -259,6 +268,35 @@ class CustomerController extends Controller
     {
         $customer = customer::where('id',$id)->first();
         return view('admin.customer.view', compact('customer'));
+    }
+
+    public function due()
+    {
+
+        return view('admin.customer.due');
+
+    }
+
+    public function ledger($id)
+    {
+
+        $customer = customer::where('id',$id)->first();
+        $reports = SalesCustomerInfo::where('customer_id',$id)->get();
+        $products = SalesProduct::where('customer_id',$id)->get();
+        $collections = Collection::where('customer_id',$id)->get();;
+        $dues = CustomerDue::where('customer_id',$id)->get();;
+        return view('admin.customer.ledger',get_defined_vars());
+    }
+
+    public function statement($id)
+    {
+
+        $customer = customer::where('id',$id)->first();
+        $reports = SalesCustomerInfo::where('customer_id',$id)->get();
+        $products = SalesProduct::where('customer_id',$id)->get();
+        $collections = Collection::where('customer_id',$id)->get();;
+        $dues = CustomerDue::where('customer_id',$id)->get();;
+        return view('admin.customer.statement',get_defined_vars());
     }
 
 

@@ -1,13 +1,13 @@
 @extends('layouts.admin')
 
 @section('page-title')
-Supplier Follow Update Add
+Update Supplier Following Date
 @endsection
 
 @section('main-content')
- 
+
 
 <livewire:follow-update.supplier.index />
-    
+
 
 @endsection

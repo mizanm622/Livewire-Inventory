@@ -5,6 +5,7 @@ namespace App\Livewire\Purchase;
 use App\Models\Brand;
 use App\Models\Product;
 use App\Models\PurchaseProduct;
+use App\Models\Store;
 use App\Models\Supplier;
 use App\Models\Warehouse;
 use Gloudemans\Shoppingcart\Facades\Cart;
@@ -26,6 +27,7 @@ class Index extends Component
     public $advance_pay;
     public $date;
     public $warehouse_id;
+    public $product_store_id;
     public $transport_no;
     public $delivery_man;
     public $address;
@@ -43,6 +45,7 @@ class Index extends Component
             'previous_due' => ['nullable'],
             'date' => ['nullable'],
             'warehouse_id' => ['nullable'],
+            'product_store_id' => ['required'],
             'transport_no' => ['nullable'],
             'delivery_man' => ['nullable'],
             'invoice_no' => ['nullable'],
@@ -50,6 +53,12 @@ class Index extends Component
 
     }
 
+     public function mount()
+    {
+        // Set the initial date when the component is mounted
+        $this->date = now()->toDateString();
+
+    }
 
     //Increment cart product
    public function updateQuantity($id, $quantities)
@@ -115,8 +124,8 @@ class Index extends Component
         'id' =>  $products->id,
         'name' =>$products->name,
         'qty' => 1,
-        'price' => $products->price_rate,
-        'options' => ['code' => $products->code, 'discount'=> 0, 'weight'=>$products->weight, 'brand_id' =>$products->brand_id, ]
+        'price' => $products->purches_rate,
+        'options' => ['code' => $products->code, 'discount'=> 0, 'weight'=>$products->weight, 'brand_id' =>$products->brand_id, 'type' => $products->type ]
         ]);
 
     }
@@ -141,8 +150,12 @@ class Index extends Component
      // store supplier info into session
    public function supplierInfo()
    {
+
+
     $validateData = $this->validate();
 
+    $store_name = Store::find($validateData['product_store_id'])->name;
+    //dd( $validateData);
 
     $supplier = session()->get('supplier');
         if(!$supplier){
@@ -156,6 +169,8 @@ class Index extends Component
                 'advance_pay' =>  $this->advance_pay,
                 'date'=>$validateData['date'],
                 'warehouse_id'=>$validateData['warehouse_id'],
+                'product_store_id'=>$validateData['product_store_id'],
+                'product_store_name'=>$store_name,
                 'warehouse_name'=> $this->warehouse_name,
                 'invoice_no'=>$this->last_inv_no,
                 'transport_no'=>$validateData['transport_no'],
@@ -182,6 +197,8 @@ class Index extends Component
                     'advance_pay' =>  $this->advance_pay,
                     'date'=>$validateData['date'],
                     'warehouse_id'=>$validateData['warehouse_id'],
+                    'product_store_id'=>$validateData['product_store_id'],
+                    'product_store_name'=>$store_name,
                     'warehouse_name'=> $this->warehouse_name,
                     'invoice_no'=>$validateData['invoice_no'],
                     'transport_no'=>$validateData['transport_no'],
@@ -282,9 +299,9 @@ class Index extends Component
 
 
 
-
+        $stores = Store::where('status',1)->get();
         $suppliers = Supplier::get();
-        $warehouses = Warehouse::get();
+        $warehouses = Warehouse::where('status',1)->get();
         $purchases = PurchaseProduct::latest()->get();
         $brands = Brand::get();
         return view('livewire.purchase.index', get_defined_vars())

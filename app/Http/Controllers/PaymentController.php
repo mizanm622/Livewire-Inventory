@@ -43,7 +43,7 @@ class PaymentController extends Controller
         }
         else
         {
-            $pay_by = Null; 
+            $pay_by = Null;
         }
 
 
@@ -61,22 +61,22 @@ class PaymentController extends Controller
                 //$pre_due = $request->previous_due; // get original value
                 Supplier::where('id',$request->supplier_id)->update(
                     [
-                       'advance_payment' =>$curr_Adv 
+                       'advance_payment' =>$curr_Adv
                     ]
                 );
             }
-           // if there is no previous advance payment but currently advanced 
+           // if there is no previous advance payment but currently advanced
             else
             {
                 if($request->previous_due)
                 {
                     $pre_adv = $request->previous_advance;// get original value
-                    $curr_Adv= abs($request->payment - $request->previous_due); 
+                    $curr_Adv= abs($request->payment - $request->previous_due);
                     $curr_due = $request->current_due; // get original value
 
                     Supplier::where('id',$request->supplier_id)->update(
                         [
-                           'advance_payment' =>$curr_Adv 
+                           'advance_payment' =>$curr_Adv
                         ]
                     );
                 }
@@ -84,19 +84,19 @@ class PaymentController extends Controller
                 {
 
                     $pre_adv = $request->previous_advance;// get original value
-                    $curr_Adv= $request->payment; 
+                    $curr_Adv= $request->payment;
                     //dd($request->previous_advance, $request->payment, $curr_Adv,$request->previous_due, $request->current_due );
                     $curr_due = $request->current_due; // get original value
                     //$pre_due = $request->previous_due; // get original value
                     Supplier::where('id',$request->supplier_id)->update(
                         [
-                           'advance_payment' =>$curr_Adv 
+                           'advance_payment' =>$curr_Adv
                         ]
                     );
                 }
-               
 
-                
+
+
             }
 
         }
@@ -113,7 +113,7 @@ class PaymentController extends Controller
 
                 Supplier::where('id',$request->supplier_id)->update(
                     [
-                       'advance_payment' =>$curr_Adv 
+                       'advance_payment' =>$curr_Adv
                     ]
                 );
             }
@@ -128,7 +128,7 @@ class PaymentController extends Controller
                 // ok dd($curr_due,  $request->previous_due, $request->previous_advance, $request->current_advance);
                 Supplier::where('id',$request->supplier_id)->update(
                     [
-                       'previous_due' =>$curr_due 
+                       'previous_due' =>$curr_due
                     ]
                 );
 
@@ -146,13 +146,13 @@ class PaymentController extends Controller
 
                 Supplier::where('id',$request->supplier_id)->update(
                     [
-                       'previous_due' =>$curr_due 
+                       'previous_due' =>$curr_due
                     ]
                 );
 
             }
 
-           
+
         }
 
 
@@ -188,12 +188,12 @@ class PaymentController extends Controller
      //delete Payment from here
      public function delete($id)
      {
- 
+
          Payment::where('id',$id)->delete();
- 
+
          $alert = array('msg' => 'Payment Successfully Deleted', 'alert-type' => 'warning');
          return redirect()->route('payment.index')->with($alert);
- 
+
      }
 
      // view details Payment from here
@@ -202,4 +202,10 @@ class PaymentController extends Controller
          $supplier = Payment::where('id',$id)->first();
          return view('admin.account.payment.view', compact('supplier'));
      }
+
+     //get collection report from here
+    public function report()
+    {
+        return view('admin.account.payment.report');
+    }
 }

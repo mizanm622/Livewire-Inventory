@@ -40,7 +40,7 @@
                                     <div class="form-group">
                                         <div class="form-group ">
                                             <input type="date" name="date" id="date" class="form-control" wire:model="date">
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -54,7 +54,7 @@
                                             <option value=""></option>
                                             @foreach ($suppliers as $supplier)
                                                 <option value="{{$supplier->id}}">
-                                                    {{$supplier->company_name}} |
+                                                    {{$supplier->company_name}} -
                                                     {{$supplier->address}}
                                                 </option>
                                             @endforeach
@@ -62,7 +62,7 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="supplier-search-button pt-4">
                                     <div class="form-group">
@@ -70,7 +70,7 @@
                                         <button type="button" wire:click="resetSupplier" class="btn btn-danger">Reset</button>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </form>
@@ -105,7 +105,7 @@
                                                     <td colspan="5">No Data Found!</td>
                                                 </tr>
                                             @endforelse
-                                            
+
                                         </tbody>
                                     </table>
                                 @else
@@ -125,7 +125,7 @@
 <script>
 
     $(document).ready(function () {
-          
+
            $('#due_supplier_search').select2({
             placeholder: 'Select supplier from here',
            });
@@ -135,16 +135,16 @@
                 var data = $('#due_supplier_search').select2("val");
                 @this.set('get_supplier_id', data);
             });
-        
+
             // $('#due_supplier_search').on('change', function (){
             //     $('#due_customer_search').reset('').trigger('change');
-               
+
             // });
-          
-        
+
+
             //$('#due_customer_search').val([]).trigger('change');
-    }); 
+    });
 
     </script>
-    
+
 @endpush

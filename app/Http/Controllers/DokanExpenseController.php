@@ -30,15 +30,26 @@ class DokanExpenseController extends Controller
             'receiving_by' => ['max:100'],
             'payment_by' => ['max:100'],
             'remarks' => ['max:1000'],
-           
+
         ]);
+
+        $voucher_no = DokanExpense::orderBy('id','DESC')->first();
+        if(!$voucher_no)
+        {
+            $voucher_no= 01;
+        }
+        else
+        {
+            $voucher_no = $voucher_no->voucher_no+1;
+        }
+
 
         DokanExpense::insert([
             'date' => $request->date,
-            'voucher_no' => $request->voucher_no,
+            'voucher_no' => $voucher_no,
             'dokan_rent' => $request->dokan_rent,
             'rent_amount' => $request->rent_amount,
-            'rent_month' => $request->rent_month,
+            'rent_month' => $request->rent_month.'-'.date('y', strtotime($request->date)),
             'payment_by' => $request->payment_by,
             'receiving_by' => $request->receiving_by,
             'payment_amount' => $request->payment_amount,
@@ -52,7 +63,7 @@ class DokanExpenseController extends Controller
     }
     public function edit($id)
     {
-       
+
         $dokan_expense = DokanExpense::where('id',$id)->first();
 
         return view('admin.expense.dokan.edit', get_defined_vars());
@@ -70,15 +81,15 @@ class DokanExpenseController extends Controller
             'receiving_by' => ['max:100'],
             'payment_by' => ['max:100'],
             'remarks' => ['max:1000'],
-           
+
         ]);
-        
+
         DokanExpense::where('id',$request->id)->update([
             'date' => $request->date,
             'voucher_no' => $request->voucher_no,
             'dokan_rent' => $request->dokan_rent,
             'rent_amount' => $request->rent_amount,
-            'rent_month' => $request->rent_month,
+            'rent_month' => $request->rent_month.'-'.date('y', strtotime($request->date)),
             'payment_by' => $request->payment_by,
             'receiving_by' => $request->receiving_by,
             'payment_amount' => $request->payment_amount,
@@ -92,7 +103,7 @@ class DokanExpenseController extends Controller
 
     public function delete($id)
     {
-       
+
         DokanExpense::where('id',$id)->delete();
         $alert = array('msg' => 'Dokan Expense Successfully Deleted', 'alert-type' => 'warning');
         return redirect()->route('dokan.expense.index')->with($alert);

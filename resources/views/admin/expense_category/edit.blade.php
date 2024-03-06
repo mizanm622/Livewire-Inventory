@@ -45,7 +45,7 @@ Expense Category Update
                         @csrf
                         <div class="row m-auto">
                             <div class="col-12">
-                               
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align" for="name">Category Name <span class=""></span>
                                     </label>
@@ -55,23 +55,22 @@ Expense Category Update
                                     <input type="hidden" name="id" id="id" value="{{$expense_category->id}}">
                                 </div>
 
-                                
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align" for="description">Description<span class=""></span>
                                     </label>
                                     <div class="col-md-4 col-sm-6">
                                         <textarea type="text" name="description" id="description" cols="10" rows="2"  class="form-control">{{$expense_category->description}}</textarea>
                                     </div>
-                                </div>  
+                                </div>
                             </div>
                         </div>
-                      
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-12 col-sm-12 text-center">
                                 <a href="{{route('expense_category.index')}}" class="btn btn-primary" type="button">Cancel</a>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" class="btn btn-success">Update</button>
                             </div>
                         </div>
                     </form>
@@ -80,5 +79,5 @@ Expense Category Update
         </div>
     </div>
 
-    
+
 @endsection

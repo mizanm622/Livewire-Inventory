@@ -13,63 +13,139 @@ Customer View
                     <a href="{{route('customer.index')}}" class="btn btn-md btn-primary float-right">Back</a>
                 </div>
                 <div class="row">
-                    
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                    
-                        <h2>Customer Information   <small> Customer all information</small>  </h2>
-                        <div class="customer_area">
-                            <div class="logo text-center mb-3">
-                                @if(empty($customer->photo))
-                                    <img src="{{asset('assets/images/user.png')}}" alt="Photo" width="100" height="100" class="rounded-circle">
-                                @else
-                                    <img src="{{asset($customer->photo)}}" alt="Photo" width="100" height="100" class="rounded-circle">
-                                @endif
-                               
-                                <h4>{{$customer->name}}</h4>
-                                <h6>{{$customer->email}}</h6>
-                            </div>
-                            <div class="title text-left">
-                                <p><strong>Company Name:</strong>  {{$customer->company_name}}</p>
-                                <p><strong>Father Name:</strong> {{$customer->father_name}}</p>
-                                <p><strong>Mobile: </strong>{{$customer->mobile}}</p>
-                                <p><strong>Phone: </strong>{{$customer->phone}}</p>
-                                <p><strong>NID Number: </strong>{{$customer->nid}}</p>
-                                <p><strong>Date Of Birth: </strong>{{$customer->birthday}}</p>
-                                <p><strong>Address: </strong>{{$customer->address}}</p>
-                                <p><strong>Ledger Page No.: </strong>{{$customer->ledger_page}}</p>
-                                <p><strong>Price Group: </strong>{{$customer->price_group}}</p>
-                                <p><strong>Security : </strong>{{$customer->security}}</p>
-                                <p><strong>Credit Limit: </strong>{{$customer->credit_limit}}/-</p>
-                                <p><strong>Advance Payment: </strong>{{$customer->advance_payment}}/-</p>
-                                <p><strong>Previous Due: </strong>{{$customer->previous_due}}/-</p>
-                                <p><strong>Remarks: </strong>{{$customer->remarks}}</p>
-                            </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12 offset-lg-2 offset-md-3">
+                        <div class="col-lg-8 col-md-6 col-sm-12">
+                            <h2 class="text-center text-dark border">customer Information</h2>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <div class="logo text-center mb-3">
+                                            @if(empty($customer->photo))
+                                                <img src="{{asset('assets/images/user.png')}}" alt="Photo" width="100" height="100" class="rounded-circle">
+                                            @else
+                                                <img src="{{asset($customer->photo)}}" alt="Photo" width="100" height="100" class="rounded-circle">
+                                            @endif
+
+                                            <h4 class="text-dark">{{$customer->name}}</h4>
+                                            @if(!empty($customer->email))
+                                                <h6 class="text-dark">{{$customer->email}}</h6>
+                                            @endif
+                                        </div>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th class="w-25 text-center">Customer Name</th>
+                                        <th class="w-25 text-center">Father Name</th>
+                                        <th class="w-25 text-center">Company Name</th>
+                                        <th class="w-25 text-center">Address</th>
+                                        <th class="w-25 text-center">Mobile</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">{{$customer->name}}</td>
+                                        <td class="text-center">{{$customer->father_name}}</td>
+                                        <td class="text-center">{{$customer->company_name}}</td>
+                                        <td class="text-center">{{$customer->address}}</td>
+                                        <td class="text-center">{{$customer->mobile}}</td>
+
+                                    </tr>
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th class="w-25 text-center">NID Number</th>
+                                        <th class="w-25 text-center">Date of Birth</th>
+                                        <th class="w-25 text-center">Ledger Page No.</th>
+                                        <th class="w-25 text-center">Price Group</th>
+                                        <th class="w-25 text-center">Type</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">{{$customer->nid}}</td>
+                                        <td class="text-center">{{$customer->birthday}}</td>
+                                        <td class="text-center">{{$customer->ledger_page}}</td>
+                                        <td class="text-center">{{$customer->price_group}}</td>
+                                        <td class="text-center">{{$customer->type}}</td>
+                                    </tr>
+                                </tbody>
+
+                                <thead>
+                                    <tr>
+                                        <th class="w-25 text-center">Security</th>
+                                        <th class="w-25 text-center">Credit Limit</th>
+                                        <th class="w-25 text-center">Previous Due</th>
+                                        <th class="w-50 text-center" colspan="2">Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">{{$customer->security}}</td>
+                                        <td class="text-right">{{$customer->credit_limit}}/=</td>
+                                        <td class="text-right">{{$customer->previous_due ?? -$customer->advance_payment}}/=</td>
+                                        <td class="text-wrap" colspan="2">{{$customer->remarks}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12">
-                        <h2>Guarantor Information   <small> Guarantor all information</small></h2>
-                        <div class="guarantor_area">
-                            <div class="logo text-center">
-                                @if(empty($customer->guarantor_photo))
-                                    <img src="{{asset('assets/images/user.png')}}" alt="Photo" width="100" height="100" class="rounded-circle">
-                                @else
-                                    <img src="{{asset($customer->guarantor_photo)}}" alt="Photo" width="100" height="100" class="rounded-circle">
-                                @endif
-                               
-                                <h4>{{$customer->guarantor_name}}</h4>
-                                <h6>{{$customer->guarantor_email}}</h6>
-                            </div>
-                            <div class="title text-left">
-                                <p><strong>Company Name:</strong>  {{$customer->guarantor_company_name}}</p>
-                                <p><strong>Father Name:</strong> {{$customer->guarantor_father_name}}</p>
-                                <p><strong>Mobile: </strong>{{$customer->guarantor_mobile}}</p>
-                                <p><strong>Phone: </strong>{{$customer->guarantor_phone}}</p>
-                                <p><strong>NID Number: </strong>{{$customer->guarantor_nid}}</p>
-                                <p><strong>Date Of Birth: </strong>{{$customer->guarantor_birthday}}</p>
-                                <p><strong>Address: </strong>{{$customer->guarantor_address}}</p>
-                                <p><strong>Security : </strong>{{$customer->guarantor_security}}</p>
-                                <p><strong>Remarks: </strong>{{$customer->guarantor_remarks}}</p>
-                            </div>
+                        <div class="col-lg-8 col-md-6 col-sm-12">
+                            <h2 class="text-center text-dark border">Guarantor Information</h2>
+                            <table class="table table-bordered table-striped">
+                                <thead>
+                                    <tr>
+                                        <div class="logo text-center mb-3">
+                                            @if(empty($customer->guarantor_photo))
+                                                <img src="{{asset('assets/images/user.png')}}" alt="Photo" width="100" height="100" class="rounded-circle">
+                                            @else
+                                                <img src="{{asset($customer->guarantor_photo)}}" alt="Photo" width="100" height="100" class="rounded-circle">
+                                            @endif
+
+                                            <h4 class="text-dark">{{$customer->guarantor_name}}</h4>
+                                            @if(!empty($customer->email))
+                                                <h6 class="text-dark">{{$customer->guarantor_email}}</h6>
+                                            @endif
+                                        </div>
+                                    </tr>
+                                </thead>
+                                <thead>
+                                    <tr>
+                                        <th class="w-25 text-center">Guarantor Name</th>
+                                        <th class="w-25 text-center">Father Name</th>
+                                        <th class="w-25 text-center">Company Name</th>
+                                        <th class="w-25 text-center">Address</th>
+                                        <th class="w-25 text-center">Mobile</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">{{$customer->guarantor_name}}</td>
+                                        <td class="text-center">{{$customer->father_name}}</td>
+                                        <td class="text-center">{{$customer->guarantor_company_name}}</td>
+                                        <td class="text-center">{{$customer->guarantor_address}}</td>
+                                        <td class="text-center">{{$customer->guarantor_mobile}}</td>
+
+                                    </tr>
+                                </tbody>
+                                <thead>
+                                    <tr>
+                                        <th class="w-25 text-center">NID Number</th>
+                                        <th class="w-25 text-center">Date of Birth</th>
+                                        <th class="w-25 text-center">Security</th>
+                                        <th class="w-50 text-center" colspan="2">Remarks</th>
+
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="text-center">{{$customer->guarantor_nid}}</td>
+                                        <td class="text-center">{{$customer->guarantor_birthday}}</td>
+                                        <td class="text-center">{{$customer->guarantor_security}}</td>
+                                        <td class="text-wrap" colspan="2">{{$customer->guarantor_remarks}}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>

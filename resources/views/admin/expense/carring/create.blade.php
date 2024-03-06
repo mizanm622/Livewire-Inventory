@@ -44,7 +44,7 @@ Carring Expense Add
                     <form action="{{route('carring.expense.store')}}" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         @csrf
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12"> 
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">Date<span class=""></span>
                                     </label>
@@ -60,17 +60,8 @@ Carring Expense Add
                                     </div>
                                 </div>
 
-                             
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="voucher_no">Voucher No<span class=""></span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6">
-                                        <input type="text" id="voucher_no" name="voucher_no"  class="form-control" >
-                                    </div>
-                                </div>
-                                
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="gary_number">Gary Number	
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="gary_number">Gary Number
                                         <span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
@@ -78,7 +69,7 @@ Carring Expense Add
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="load_point">Load Point	
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="load_point">Load Point
                                       <span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
@@ -104,7 +95,7 @@ Carring Expense Add
                                         <input type="text" id="driver_name" name="driver_name" class="form-control" >
                                     </div>
                                 </div>
-                                
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="payment_amount">Payment Amount<span class=""></span>
                                     </label>
@@ -112,19 +103,19 @@ Carring Expense Add
                                         <input type="text" id="payment_amount" name="payment_amount"  class="form-control">
                                     </div>
                                 </div>
-        
+
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="remarks"> Remarks	
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="remarks"> Remarks
                                        <span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
                                         <textarea type="text" name="remarks" id="remarks" cols="10" rows="2"  class="form-control"></textarea>
-                                      
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                      
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-12 col-sm-12 text-center">
@@ -139,5 +130,5 @@ Carring Expense Add
         </div>
     </div>
 
-    
+
 @endsection

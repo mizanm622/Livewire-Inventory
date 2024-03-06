@@ -102,7 +102,19 @@ Supplier List
                                         <td class="text-right">-{{$supplier->advance_payment}}/=</td>
                                         @endif
                                         <td class="text-center">{!!$supplier->status == 1 ? '<a href="'.route('supplier.status',[$supplier->id,$supplier->status]).'"><i class="fa fa-check-circle text-success" style="font-size:24px"></i></a>  ':'<a href="'.route('supplier.status',[$supplier->id,$supplier->status]).'"><i class="fa fa-times-circle text-danger" style="font-size:24px"></i></a> ' !!}</td>
-                                        <td> <a href="{{route('supplier.edit',$supplier->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a> <a href="{{route('supplier.delete',$supplier->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a> <a href="{{route('supplier.view',$supplier->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a> </td>
+                                        <td>
+                                            <div class="btn-group btn-group-vertical">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu h-25" role="menu">
+                                                    <li> <a href="{{route('supplier.edit',$supplier->id)}}" class="btn btn-success w-20"><i class="fa fa-edit" ></i></a></li>
+                                                    <li> <a href="{{route('supplier.delete',$supplier->id)}}" class="btn btn-danger w-20" id="delete"><i class="fa fa-trash" ></i></a></li>
+                                                    <li><a href="{{route('supplier.view',$supplier->id)}}" class="btn btn-info w-20"><i class="fa fa-eye" ></i></a></li>
+                                                    <li><a href="{{route('supplier.ledger',$supplier->id)}}" class="btn btn-info w-20"><i class="fa fa-book" ></i></a></li>
+                                                    <li><a href="{{route('supplier.statement',$supplier->id)}}" class="btn btn-info w-20"><i class="fa fa-tasks" ></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

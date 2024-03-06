@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bank;
 use App\Models\BankExpense;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,8 @@ class BankExpenseController extends Controller
 
     public function create()
     {
-        return view('admin.expense.bank.create');
+        $banks = Bank::get();
+        return view('admin.expense.bank.create',compact('banks'));
     }
 
     public function store(Request $request)
@@ -23,22 +25,32 @@ class BankExpenseController extends Controller
         $validator = $request->validate([
             'date' => [ 'max:10'],
             'voucher_no' => ['max:10'],
-            'bank_name' => ['max:255'],
+            'bank_id' => ['max:11'],
             'profit_amount' => ['max:100'],
             'profit_month' => ['max:100'],
             'other_charge' => ['max:100'],
             'payment_amount' => ['max:100'],
             'payment_by' => ['max:100'],
             'remarks' => ['max:1000'],
-           
+
         ]);
+
+        $voucher_no = BankExpense::orderBy('id','DESC')->first();
+        if(!$voucher_no)
+        {
+            $voucher_no= 01;
+        }
+        else
+        {
+            $voucher_no = $voucher_no->voucher_no+1;
+        }
 
         BankExpense::insert([
             'date' => $request->date,
-            'voucher_no' => $request->voucher_no,
-            'bank_name' => $request->bank_name,
+            'voucher_no' => $voucher_no,
+            'bank_id' => $request->bank_id,
             'profit_amount' => $request->profit_amount,
-            'profit_month' => $request->profit_month,
+            'profit_month' => $request->profit_month.'-'.date('y', strtotime($request->date)),
             'other_charge' => $request->other_charge,
             'payment_amount' => $request->payment_amount,
             'payment_by' => $request->payment_by,
@@ -52,7 +64,7 @@ class BankExpenseController extends Controller
     }
     public function edit($id)
     {
-       
+        $banks = Bank::get();
         $bank_expense = BankExpense::where('id',$id)->first();
 
         return view('admin.expense.bank.edit', get_defined_vars());
@@ -63,20 +75,20 @@ class BankExpenseController extends Controller
         $validator = $request->validate([
             'date' => [ 'max:10'],
             'voucher_no' => ['max:10'],
-            'bank_name' => ['max:255'],
+            'bank_id' => ['max:11'],
             'profit_amount' => ['max:100'],
             'profit_month' => ['max:100'],
             'other_charge' => ['max:100'],
             'payment_amount' => ['max:100'],
             'payment_by' => ['max:100'],
             'remarks' => ['max:1000'],
-           
+
         ]);
-        
+
         BankExpense::where('id',$request->id)->update([
             'date' => $request->date,
             'voucher_no' => $request->voucher_no,
-            'bank_name' => $request->bank_name,
+            'bank_id' => $request->bank_id,
             'profit_amount' => $request->profit_amount,
             'profit_month' => $request->profit_month,
             'other_charge' => $request->other_charge,
@@ -84,7 +96,7 @@ class BankExpenseController extends Controller
             'payment_by' => $request->payment_by,
             'remarks' => $request->remarks,
             'created_by' => auth()->user()->name,
-            
+
         ]);
 
         $alert = array('msg' => 'Bank Expense Successfully Update', 'alert-type' => 'info');
@@ -94,7 +106,7 @@ class BankExpenseController extends Controller
 
     public function delete($id)
     {
-       
+
         BankExpense::where('id',$id)->delete();
         $alert = array('msg' => 'Bank Expense Successfully Deleted', 'alert-type' => 'warning');
         return redirect()->route('bank.expense.index')->with($alert);

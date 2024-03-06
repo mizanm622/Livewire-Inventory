@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('supplier_id');
             $table->date('date')->nullable();
+            $table->date('next_date')->nullable();
             $table->double('previous_due')->nullable();
             $table->double('current_due')->nullable();
             $table->integer('paid_amount')->nullable();

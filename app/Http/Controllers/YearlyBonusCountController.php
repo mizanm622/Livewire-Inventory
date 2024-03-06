@@ -19,9 +19,8 @@ class YearlyBonusCountController extends Controller
 
    public function create()
    {
-       $suppliers = Supplier::all();
-       $bonus_list = YearlyBonusCount::first();
-       return view('admin.bonus.yearly_count.create' ,get_defined_vars());
+      
+       return view('admin.bonus.yearly_count.create');
    }
    public function store(Request $request)
    {

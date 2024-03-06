@@ -4,14 +4,17 @@ namespace App\Livewire\Sales;
 
 use App\Models\Brand;
 use App\Models\customer;
+use App\Models\PriceGroupProduct;
 use App\Models\Product;
+use App\Models\ProductStore;
 use App\Models\PurchaseProduct;
 use App\Models\SalesProduct;
+use App\Models\Store;
 use App\Models\Warehouse;
-use App\Models\ProductStore;
-use Livewire\Component;
 use Gloudemans\Shoppingcart\Facades\Cart;
+use Livewire\Component;
 use Livewire\WithPagination;
+
 class Index extends Component
 {
     use WithPagination;
@@ -23,7 +26,7 @@ class Index extends Component
     public $previous_due;
     public $advance_pay;
     public $date;
-    public $warehouse_id;
+    public $product_store_id;
     public $transport_no;
     public $delivery_man;
     public $customer_search;
@@ -31,9 +34,9 @@ class Index extends Component
     public $address;
     public $mobile;
     public $invoice_no;
-    public $warehouse_name;
+    public $product_store_name;
     public $last_inv_no;
-
+    public $price_group_id;
     public $stock_out;
     public $products;
 
@@ -47,7 +50,7 @@ class Index extends Component
         [
             'previous_due' => ['nullable'],
             'date' => ['nullable'],
-            'warehouse_id' => ['nullable'],
+            'product_store_id' => ['nullable'],
             'transport_no' => ['nullable'],
             'delivery_man' => ['nullable'],
             'invoice_no' => ['nullable'],
@@ -55,31 +58,42 @@ class Index extends Component
 
     }
 
+    public function mount()
+    {
+        // Set the initial date when the component is mounted
+        $this->date = now()->toDateString();
+
+    }
+
 
     //Increment cart product
-   public function updateQuantity($id, $warehouse, $quantities)
+   public function updateQuantity($id, $store, $quantities)
    {
     //dd($id, $warehouse, $quantities);
 
-   $result =  ProductStore::where('product_id', $id)->where('warehouse_id', $warehouse)->where('product_quantity', '>=', $quantities)->first();
+   $result =  ProductStore::where('product_id', $id)->where('product_store_id', $store)->where('product_quantity', '>=', $quantities)->first();
 
-    if($result)
-    {
+
         foreach(Cart::instance('salse')->content() as $item)
         {
-            if($item->id == $id)
+            if($result)
             {
-                $item->qty = $quantities;
-
+                if($item->id == $id)
+                {
+                    $item->qty = $quantities;
+                    $item->options->stock = 1;
+                }
             }
-            $this->reset('stock_out');
-        }
-    }
-    else
-    {
-        $this->stock_out = 'Stock Out! only '.ProductStore::where('product_id', $id)->where('warehouse_id', $warehouse)->value('product_quantity').' available';
+            else
+            {
+                if($item->id == $id)
+                {
+                    $item->options->stock = 0;
 
-    }
+                }
+            }
+        }
+
 
 
     //$this->dispatch('refresh');
@@ -132,14 +146,20 @@ class Index extends Component
     {
 
         $products = ProductStore::where('product_id',$id)->first();
-         Cart::instance('salse')->add([
-        'id' =>  $products->product_id,
-        'name' =>$products->product_name,
-        'qty' => 1,
-        'price' => $products->product->price_rate,
-        'options' => ['code' => $products->product_code, 'discount'=> 0, 'warehouse_id'=>$products->warehouse_id]
-        ]);
 
+        $product = Product::where('id',$id)->first();
+
+
+
+        $price_group_rate = PriceGroupProduct::where('price_group_id',$this->price_group_id)->where('product_id',$id)->value('price_group_rate');
+
+            Cart::instance('salse')->add([
+                'id' =>  $products->product_id,
+                'name' =>$products->product_name,
+                'qty' => 1,
+                'price' => $price_group_rate ?? $products->product->price_rate,
+                'options' => ['code' => $products->product_code, 'discount'=> 0, 'weight'=> $product->size->name, 'product_store_id'=>$products->product_store_id, 'stock' => 1, 'type'=>$products->product->type]
+                ]);
 
     }
 
@@ -155,11 +175,19 @@ class Index extends Component
     }
 
      //warehouse search
-     public function warehouseSearch($value)
+     public function productSearch($value)
      {
-        //dd($value);
-         $this->warehouse_id = $value;
-         $this->warehouse_name = Warehouse::find($this->warehouse_id)->name;
+
+        if($value == 0)
+        {
+
+        }
+        else
+        {
+            $this->product_store_id = $value;
+            $this->product_store_name = Store::find($value)->name;
+        }
+
 
      }
      // store supplier info into session
@@ -178,8 +206,8 @@ class Index extends Component
                 'previous_due' =>  $this->previous_due,
                 'advance_pay' =>  $this->advance_pay,
                 'date'=>$validateData['date'],
-                'warehouse_id'=>$validateData['warehouse_id'],
-                'warehouse_name'=> $this->warehouse_name,
+                'product_store_id'=>$validateData['product_store_id'],
+                'product_store_name'=> $this->product_store_name,
                 'invoice_no'=>$this->last_inv_no,
                 'transport_no'=>$validateData['transport_no'],
                 'delivery_man'=>$validateData['delivery_man'],
@@ -204,8 +232,8 @@ class Index extends Component
                     'previous_due' =>  $this->previous_due,
                     'advance_pay' =>  $this->advance_pay,
                     'date'=>$validateData['date'],
-                    'warehouse_id'=>$validateData['warehouse_id'],
-                    'warehouse_name'=> $this->warehouse_name,
+                    'product_store_id'=>$validateData['product_store_id'],
+                    'product_store_name'=> $this->product_store_name,
                     'invoice_no'=>$this->last_inv_no,
                     'transport_no'=>$validateData['transport_no'],
                     'delivery_man'=>$validateData['delivery_man'],
@@ -241,10 +269,11 @@ class Index extends Component
 
                 $this->previous_due = $customers->previous_due;
                 $this->advance_pay = $customers->advance_payment;
-
                 $this->address = $customers->address;
                 $this->mobile = $customers->mobile;
                 $this->customer_id = $customers->id;
+                $this->price_group_id = $customers->price_group_id;
+
                 if($customers->previous_due != 0)
                 {
                     session()->put('sales_old_due',$customers->previous_due);
@@ -267,21 +296,21 @@ class Index extends Component
         }
 
 
-        if($this->warehouse_id)
+        if($this->product_store_id)
         {
 
             // brand wise product search
-            $this->products = ProductStore::where('warehouse_id',$this->warehouse_id)->get();
+            $this->products = ProductStore::where('product_store_id',$this->product_store_id)->get();
 
-            if($this->brand_id && $this->warehouse_id)
+            if($this->brand_id && $this->product_store_id)
                 {
-                    $this->products = ProductStore::where('warehouse_id',$this->warehouse_id)
+                    $this->products = ProductStore::where('product_store_id',$this->product_store_id)
                     ->where('brand_id',$this->brand_id)
                     ->get();
                 }
-            elseif($this->search && $this->warehouse_id)
+            elseif($this->search && $this->product_store_id)
                 {
-                    $this->products = ProductStore::where('warehouse_id',$this->warehouse_id)
+                    $this->products = ProductStore::where('product_store_id',$this->product_store_id)
                     ->where('product_name','Like',"%{$this->search}%")
                     ->orWhere('product_code','Like',"%{$this->search}%")
                     ->get();
@@ -317,7 +346,7 @@ class Index extends Component
 
 
         $customers = customer::get();
-        $warehouses = Warehouse::get();
+        $stores = Store::where('status',1)->get();
         $brands = Brand::get();
         return view('livewire.sales.index', get_defined_vars())
          ->extends('layouts.admin')

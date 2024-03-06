@@ -80,7 +80,7 @@ Expense Update
                                         <input type="text" id="expense_for" name="expense_for" value="{{$expense->expense_for}}" class="form-control" >
                                     </div>
                                 </div>
-                                
+
 
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="payment_type">Payment Type<span class=""></span>
@@ -98,7 +98,7 @@ Expense Update
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="account">Account<span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
-                                        <select type="text" id="account" name="account"  class="form-control" > 
+                                        <select type="text" id="account" name="account"  class="form-control" >
                                             <option value="Firoz">Firoz</option>
                                             <option value="Mahady">Mahady</option>
                                             <option value="Razu">Razu</option>
@@ -135,16 +135,15 @@ Expense Update
                                         <textarea type="text" name="note" id="note" cols="10" rows="2"  class="form-control">{{$expense->note}}</textarea>
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
-                      
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-12 col-sm-12 text-center">
                                 <a href="{{route('expense.index')}}" class="btn btn-primary" type="button">Cancel</a>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" class="btn btn-success">Update</button>
                             </div>
                         </div>
                     </form>
@@ -153,5 +152,5 @@ Expense Update
         </div>
     </div>
 
-    
+
 @endsection

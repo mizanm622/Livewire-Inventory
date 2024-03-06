@@ -10,4 +10,9 @@ class customer extends Model
     use HasFactory;
 
     protected $guarded = [];
+    public function priceGroup()
+    {
+        return $this->belongsTo( PriceGroup::class, 'price_group_id');
+    }
+
 }

@@ -9,9 +9,9 @@ Purchase Return List
 <div class="col-md-12 col-sm-12">
     <div class="x_panel">
         <div class="x_title">
-                <h2> <a href="{{route('purchase.return.create')}}" class="btn btn-md btn-primary">+Add New Purchase</a> Purchase Return List<small>Show Purchase Return list from here</small></h2>
+                <h2> <a href="{{route('live.purchase.return.create')}}" class="btn btn-md btn-primary">+Add New Purchase</a> Purchase Return List<small>Show Purchase Return list from here</small></h2>
                 <ul class="nav navbar-right panel_toolbox">
-                   
+
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -41,33 +41,44 @@ Purchase Return List
                         <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
-                                <th class="all">Date</th>
-                                <th class="all">Purchase Code</th>
-                                <th class="all">Return Code</th>
-                                <th class="all">Status</th>
-                                <th class="all">Reference No.</th>
-                                <th class="all">Supplier Name</th>
-                                <th class="all">Total</th>
-                                <th class="all">Paid Payment</th>
-                                <th class="all">Payment Type</th>
-                                <th class="all">Created By</th>
+                                <th class="all">Purchase Date</th>
+                                <th class="all">Return Date</th>
+                                <th class="all">Company Name</th>
+                                <th class="all">Address</th>
+                                <th class="all">Mobile</th>
+                                <th class="all">Warehouse</th>
+                                <th class="all">Store</th>
+                                <th class="all">Purchase Invoice</th>
+                                <th class="all">Return Invoice</th>
+                                <th class="all">Return Quantity</th>
+                                <th class="all">Total Price</th>
                                 <th class="all">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($returnSuppliers as $returnSupplier)
+                                @foreach($return_purchase_suppliers as $returnSupplier)
                                     <tr>
-                                        <td>{{date('d-m-Y', strtotime($returnSupplier->date))}}</td>
-                                        <td>{{$returnSupplier->purchase_code}}</td>
-                                        <td>{{$returnSupplier->return_code}}</td>
-                                        <td>{{$returnSupplier->status}}</td>
-                                        <td>{{$returnSupplier->reference_no}}</td>
-                                        <td>{{$returnSupplier->company_name}}</td>
-                                        <td class="text-right">{{$returnSupplier->total}}/=</td>
-                                        <td class="text-right">{{$returnSupplier->amount}}/=</td>
-                                        <td>{{$returnSupplier->payment_type}}</td>
-                                        <td >{{$returnSupplier->created_by}}</td>
-                                        <td> <a href="{{route('purchase.return.edit',$returnSupplier->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a> <a href="{{route('purchase.return.delete',$returnSupplier->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a></td>
+                                        <td>{{date('d-m-Y', strtotime($returnSupplier->purchase_date))}}</td>
+                                        <td>{{date('d-m-Y', strtotime($returnSupplier->return_date))}}</td>
+                                        <td>{{$returnSupplier->supplier->company_name}}</td>
+                                        <td>{{$returnSupplier->supplier->address}}</td>
+                                        <td>{{$returnSupplier->supplier->phone}}</td>
+                                        <td>{{$returnSupplier->warehouse->name}}</td>
+                                        <td>{{$returnSupplier->store->name}}</td>
+                                        <td>{{$returnSupplier->purchase_invoice_no}}</td>
+                                        <td>{{$returnSupplier->return_invoice_no}}</td>
+                                        <td>{{$returnSupplier->total_qty}}</td>
+                                        <td  class="text-right">{{$returnSupplier->total_price}}/=</td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="{{route('purchase.return.delete',$returnSupplier->return_invoice_no)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a></li>
+                                                    <li> <a href="{{route('purchase.return.view', [$returnSupplier->return_invoice_no,$returnSupplier->supplier_id])}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

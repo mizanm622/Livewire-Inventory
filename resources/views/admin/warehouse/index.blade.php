@@ -11,7 +11,7 @@ Warehouse List
         <div class="x_title">
                 <h2> <a href="{{route('warehouse.create')}}" class="btn btn-md btn-primary">+Add Warehouse</a> Warehouse List<small>Show Warehouse list from here</small></h2>
                 <ul class="nav navbar-right panel_toolbox">
-                   
+
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -67,14 +67,13 @@ Warehouse List
                                         <td class="text-wrap">{{$warehouse->description}}</td>
                                         <td class="text-wrap">{{$warehouse->remarks}}</td>
                                         <td class="text-center">{!!$warehouse->status == 1 ? '<a href="'.route('warehouse.status',[$warehouse->id,$warehouse->status]).'"><i class="fa fa-check-circle text-success" style="font-size:24px"></i></a>  ':'<a href="'.route('warehouse.status',[$warehouse->id,$warehouse->status]).'"><i class="fa fa-times-circle text-danger" style="font-size:24px"></i></a> ' !!}</td>
-                                        <td> 
+                                        <td>
                                             <div class="btn-group">
                                                 <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
                                                 Action <span class="caret"></span></button>
                                                 <ul class="dropdown-menu" role="menu">
                                                   <li><a href="{{route('warehouse.edit',$warehouse->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a> </li>
                                                   <li><a href="{{route('warehouse.delete',$warehouse->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a></li>
-                                                  <li><a href="{{route('warehouse.view',$warehouse->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></li>
                                                 </ul>
                                               </div>
                                             {{-- <a href="{{route('warehouse.edit',$warehouse->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a> <a href="{{route('warehouse.delete',$warehouse->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a> <a href="{{route('warehouse.view',$warehouse->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a> --}}

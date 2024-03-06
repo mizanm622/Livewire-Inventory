@@ -39,7 +39,7 @@ class CollectionController extends Controller
         }
         else
         {
-            $pay_by = Null; 
+            $pay_by = Null;
         }
 
 
@@ -56,23 +56,23 @@ class CollectionController extends Controller
                 //$pre_due = $request->previous_due; // get original value
                 customer::where('id',$request->customer_id)->update(
                     [
-                       'advance_payment' =>$curr_Adv 
+                       'advance_payment' =>$curr_Adv
                     ]
                 );
             }
-           // if there is no previous advance payment but currently advanced 
+           // if there is no previous advance payment but currently advanced
             else
             {
                 if($request->previous_due)
                 {
                     //dd($request->previous_due);
                     $pre_adv = $request->previous_advance;// get original value
-                    $curr_Adv= abs($request->payment - $request->previous_due); 
+                    $curr_Adv= abs($request->payment - $request->previous_due);
                     $curr_due = $request->current_due; // get original value
 
                     customer::where('id',$request->customer_id)->update(
                         [
-                           'advance_payment' =>$curr_Adv 
+                           'advance_payment' =>$curr_Adv
                         ]
                     );
                 }
@@ -80,25 +80,25 @@ class CollectionController extends Controller
                 {
 
                     $pre_adv = $request->previous_advance;// get original value
-                    $curr_Adv= $request->payment; 
+                    $curr_Adv= $request->payment;
                     //dd($request->previous_advance, $request->payment, $curr_Adv,$request->previous_due, $request->current_due );
                     $curr_due = $request->current_due; // get original value
                     //$pre_due = $request->previous_due; // get original value
                     customer::where('id',$request->customer_id)->update(
                         [
-                           'advance_payment' =>$curr_Adv 
+                           'advance_payment' =>$curr_Adv
                         ]
                     );
                 }
-               
 
-                
+
+
             }
 
         }
         else
         {
-             
+
             // if payment is greater than the previous due
             if($request->payment > $request->previous_due)
             {
@@ -112,7 +112,7 @@ class CollectionController extends Controller
 
                 customer::where('id',$request->customer_id)->update(
                     [
-                       'advance_payment' =>$curr_Adv 
+                       'advance_payment' =>$curr_Adv
                     ]
                 );
             }
@@ -127,7 +127,7 @@ class CollectionController extends Controller
                 // ok dd($curr_due,  $request->previous_due, $request->previous_advance, $request->current_advance);
                 customer::where('id',$request->customer_id)->update(
                     [
-                       'previous_due' =>$curr_due 
+                       'previous_due' =>$curr_due
                     ]
                 );
 
@@ -145,13 +145,13 @@ class CollectionController extends Controller
 
                 customer::where('id',$request->customer_id)->update(
                     [
-                       'previous_due' =>$curr_due 
+                       'previous_due' =>$curr_due
                     ]
                 );
 
             }
 
-           
+
         }
 
        // dd($request->all(),  $pay_by);
@@ -195,5 +195,11 @@ class CollectionController extends Controller
     {
         $customer = Collection::where('id',$id)->first();
         return view('admin.account.collection.view', compact('customer'));
+    }
+
+    //get collection report from here
+    public function report()
+    {
+        return view('admin.account.collection.report');
     }
 }

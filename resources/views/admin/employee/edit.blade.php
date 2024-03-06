@@ -45,7 +45,7 @@ Employee Update
                         @csrf
                         <div class="row">
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                               
+
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="name">Employee Name <span class=""></span>
                                     </label>
@@ -67,7 +67,7 @@ Employee Update
                                         <textarea type="text" name="address" id="address" cols="10" rows="2"  class="form-control">{{$employee->address}}</textarea>
                                     </div>
                                 </div>
-                               
+
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="mobile">Mobile Number<span class=""></span>
                                     </label>
@@ -106,7 +106,7 @@ Employee Update
                                     </label>
                                     <div class="col-md-6 col-sm-6">
                                         <input id="birthday" name="birthday" class="form-control" value="{{$employee->birthday}}" placeholder="dd-mm-yyyy" type="text"  type="text" onfocus="this.type='date'" onmouseover="this.type='date'" onclick="this.type='date'" onblur="this.type='text'" onmouseout="timeFunctionLong(this)">
-                                       
+
                                     </div>
                                 </div>
                                 <div class="item form-group ">
@@ -145,7 +145,7 @@ Employee Update
                                         <input type="text" id="security" name="security" value="{{$employee->security}}"  class="form-control">
                                     </div>
                                 </div>
-                               
+
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="others">Others Amount<span class=""></span>
                                     </label>
@@ -161,16 +161,15 @@ Employee Update
                                         <textarea type="text" name="remarks" id="remarks" cols="10" rows="2"  class="form-control">{{$employee->remarks}}</textarea>
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
-                      
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-12 offset-md-3 text-center">
                                 <a href="{{route('employee.index')}}" class="btn btn-primary" type="button">Cancel</a>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" class="btn btn-success">Update</button>
                             </div>
                         </div>
                     </form>

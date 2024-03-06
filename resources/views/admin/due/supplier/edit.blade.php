@@ -42,7 +42,7 @@ Supplier Due Update
                 <form action="{{route('supplier.due.update')}}" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                     @csrf
                     <div class="col-lg-12 col-md-12 col-sm-12 offset-1">
-                       
+
                         <div class="row">
                             <div class="collection-form-area">
                                 <div class="col-lg-3 col-md-3 col-sm-12">
@@ -77,7 +77,7 @@ Supplier Due Update
                                         <label for="purpose">Purpose</label>
                                         <input type="text"  name="purpose"  value="{{$supplier->purpose}}" class="form-control">
                                     </div>
-                                  
+
                                 </div>
                                 <div class="col-lg-3 col-md-3 col-sm-12">
                                     <div class="form-group">
@@ -89,38 +89,9 @@ Supplier Due Update
                                         <label  for="remarks">Remarks:</label>
                                         <textarea type="text" name="remarks"  id="transport_no" class="form-control" cols="5" rows="2">{{$supplier->remarks}}</textarea>
                                     </div>
-                                    {{-- <div class="form-group">
-                                        <label  for="prepare">Paying By:</label>
-                                        @if(isset($bank_title))
-                                    
-                                        @else
-                                            <select type="text" value="payment_by" wire:change="paymentSearch($event.target.value)"  name="payment_by"  class="form-control">  
-                                                <option value="">Select Option</option>
-                                                    @foreach($payment_types as $payment_type)
-                                                        <option value="{{$payment_type}}">{{$payment_type}}</option>
-                                                    @endforeach
-                                            </select>
-                                        
-                                        @endif
-                                        @if(isset($bank_list))
-                                            @if($bank_list == 1)
-                                                <select type="text" value="bank_title" wire:change="paymentSearch($event.target.value)"  name="payment_by"  class="form-control">  
-                                                    <option value="">Select Option</option>
-                                                        @foreach($banks as $bank)
-                                                            <option value="{{$bank->title}}">{{$bank->title}}</option>
-                                                        @endforeach
-                                                </select>
-                                            @elseif($bank_list == 2)
-                                                <input type="text" value="bank_title" class="form-control">
 
-                                            @else
-                                                
-
-                                            @endif
-                                        @endif
-                                    </div> --}}
                                 </div>
-                               
+
                                 <div class="col-lg-3 col-md-3 col-sm-12">
                                     @if(isset($supplier->previous_advance))
                                         <div class="form-group">
@@ -133,8 +104,8 @@ Supplier Due Update
                                             <input type="text"  name="previous_due"  value="{{$supplier->previous_due}}" class="form-control">
                                         </div>
                                     @endif
-        
-                                    
+
+
                                     <div class="form-group">
                                         <label  for="payment">Amount:</label>
                                         <input type="text" name="payment" value="{{$supplier->paid_amount}}" id="payment" class="form-control">
@@ -150,7 +121,7 @@ Supplier Due Update
                                         <input type="text" name="current_due"  value="{{$supplier->current_due}}" id="current_due" class="form-control">
                                     </div>
                                 @endif
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -158,8 +129,7 @@ Supplier Due Update
                         <div class="item form-group">
                             <div class="col-lg-12 col-md-12 col-sm-12 offset-3">
                                 <a href="{{route('supplier.due.index')}}" class="btn btn-primary" type="button">Cancel</a>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" class="btn btn-success">Update</button>
                             </div>
                         </div>
                     </div>
@@ -169,5 +139,5 @@ Supplier Due Update
     </div>
 </div>
 
-    
+
 @endsection

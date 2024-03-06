@@ -13,23 +13,22 @@ return new class extends Migration
     {
         Schema::create('return_supplier_infos', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('supplier_id');
-            $table->integer('total')->nullable();
-            $table->integer('after_discount')->nullable();
+            $table->unsignedBigInteger('supplier_id')->nullable();
+            $table->integer('purchase_invoice_no')->nullable();
+            $table->integer('return_invoice_no')->nullable();
+            $table->date('purchase_date')->nullable();
+            $table->date('return_date')->nullable();
             $table->integer('warehouse_id')->nullable();
-            $table->string('reference_no')->nullable();
-            $table->integer('total_quantity')->nullable();
-            $table->string('other_charge')->nullable();
-            $table->integer('percent_discount')->nullable();
-            $table->integer('fix_discount')->nullable();
-            $table->string('status')->nullable();
-            $table->date('date')->nullable();
-            $table->string('amount')->nullable();
-            $table->string('payment_type')->nullable();
-            $table->string('account')->nullable();
-            $table->string('payment_note')->nullable();
-            $table->string('note')->nullable();
-            $table->softDeletes();
+            $table->integer('product_store_id')->nullable();
+            $table->string('transport_no')->nullable();
+            $table->string('total_price')->nullable();
+            $table->string('total_qty')->nullable();
+            $table->integer('old_due')->nullable();
+            $table->integer('current_due')->nullable();
+            $table->double('advance_payment',20,4)->nullable();
+            $table->integer('carring')->nullable();
+            $table->integer('other_charge')->nullable();
+            $table->string('remarks')->nullable();
             $table->timestamps();
         });
     }

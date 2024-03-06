@@ -12,7 +12,7 @@ Warehouse Add
         <div class="col-md-12 col-sm-12 ">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>Add Warehouse <small>Add Warehouse Brand from here</small></h2>
+                    <h2>Add Warehouse <small>Add Warehouse from here</small></h2>
                     <ul class="nav navbar-right panel_toolbox">
                         <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                         </li>
@@ -45,7 +45,7 @@ Warehouse Add
                         @csrf
                         <div class="row m-auto">
                             <div class="col-12">
-                               
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align" for="name">Warehouse Name <span class=""></span>
                                     </label>
@@ -84,7 +84,7 @@ Warehouse Add
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align" for="description">Description<span class=""></span>
                                     </label>
@@ -92,8 +92,8 @@ Warehouse Add
                                         <textarea type="text" name="description" id="description" cols="10" rows="2"  class="form-control"></textarea>
                                     </div>
                                 </div>
-                              
-                                
+
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align" for="remarks">Remarks<span class=""></span>
                                     </label>
@@ -101,10 +101,10 @@ Warehouse Add
                                         <textarea type="text" name="remarks" id="remarks" cols="10" rows="2"  class="form-control"></textarea>
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
-                      
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-12 col-sm-12 text-center">
@@ -119,5 +119,5 @@ Warehouse Add
         </div>
     </div>
 
-    
+
 @endsection

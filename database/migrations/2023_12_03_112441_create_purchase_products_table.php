@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('purchase_products',function (Blueprint $table) {
+        Schema::create('purchase_products', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('supplier_id')->nullable();
             $table->unsignedBigInteger('invoice_no')->nullable();
             $table->integer('warehouse_id')->nullable();
+            $table->integer('product_store_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->string('product_code')->nullable();
             $table->integer('purchase_code')->nullable();

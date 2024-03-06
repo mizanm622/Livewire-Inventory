@@ -65,7 +65,7 @@ class Index extends Component
         //     $this->invoice_no = $inv_no->invoice_no+1;
         // }
 
-        
+
     }
 
     public function storeCustomerDue()
@@ -87,31 +87,31 @@ class Index extends Component
         }
         elseif($this->previous_due)
         {
-            //if payment amount is greater than the previous due 
+            //if payment amount is greater than the previous due
             //then the current due will be store into advance payment field
             if($this->current_due<0)
             {
-                $curr_due= Null ; 
+                $curr_due= Null ;
                 $current_pay = abs($this->current_due);
             }
             else
             {
-                
+
                 if($this->current_due == 0)
                 {
                     //dd($this->current_due);
 
-                    $curr_due= Null; 
+                    $curr_due= Null;
                     $current_pay = Null;
                 }
                 else
                 {
-                    $curr_due= $this->current_due; 
+                    $curr_due= $this->current_due;
                     $current_pay = Null;
                 }
-               
+
             }
-          
+
             //dd($curr_due, $current_pay);
         }
         else
@@ -120,7 +120,7 @@ class Index extends Component
             $current_pay = $this->current_due;
             //dd($curr_due, $current_pay);
         }
-        
+
         CustomerDue::insert([
             'customer_id'=>$this->customer_id,
             'current_due'=> $curr_due,
@@ -131,7 +131,7 @@ class Index extends Component
             'date'=>$validateData['date'],
             'purpose'=>$validateData['purpose'],
             'remarks'=>$validateData['remarks'],
-           
+
         ]);
 
          //update customer info
@@ -144,14 +144,14 @@ class Index extends Component
         //update supplier previous due/ Advance payment
         if($this->previous_due)
         {
-             //if payment amount is greater than the previous due 
+             //if payment amount is greater than the previous due
             //then the current due will be store into advance payment field
             if($this->current_due<0)
             {
                 customer::where('id',$this->customer_id)->update([
                     'advance_payment' =>abs($this->current_due),
-                    'previous_due' =>Null,  
-                ]);  
+                    'previous_due' =>Null,
+                ]);
             }
             else
             {
@@ -165,28 +165,28 @@ class Index extends Component
                 {
 
                     customer::where('id',$this->customer_id)->update([
-                        'previous_due' =>$this->current_due 
+                        'previous_due' =>$this->current_due
                     ]);
                 }
                  //update Supplier previous due
             }
-           
+
         }
         elseif($this->advance_payment)
         {
             customer::where('id',$this->customer_id)->update([
-                'advance_payment' =>$this->current_due 
+                'advance_payment' =>$this->current_due
             ]);
-           
+
         }
         else
         {
             customer::where('id',$this->customer_id)->update([
-                'advance_payment' =>$this->current_due 
+                'advance_payment' =>$this->current_due
             ]);
         }
 
-        
+
 
         $notification=array('msg' => 'Customer Due Successfully Inserted!', 'alert-type' => 'success');
         return redirect()->route('customer.due.create')->with($notification);
@@ -206,7 +206,7 @@ class Index extends Component
 //     }
 //     elseif($value == 'Cheque')
 //     {
-     
+
 //         $this->bank_list = 2;
 
 //     }
@@ -224,7 +224,7 @@ class Index extends Component
                     $this->current_due = $this->advance_payment;
                     if($this->payment)
                     {
-                        $this->current_due = $this->payment + $this->advance_payment; 
+                        $this->current_due = $this->payment - $this->advance_payment;
                     }
                 }
                 else
@@ -232,7 +232,7 @@ class Index extends Component
                     $this->current_due = $this->previous_due;
                     if($this->payment)
                     {
-                        $this->current_due = $this->previous_due -$this->payment; 
+                        $this->current_due = $this->previous_due + $this->payment;
                     }
                 }
 

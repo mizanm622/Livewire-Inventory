@@ -45,7 +45,7 @@ Size Update
                         @csrf
                         <div class="row m-auto">
                             <div class="col-12">
-                               
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align" for="name">Size Name <span class=""></span>
                                     </label>
@@ -55,7 +55,7 @@ Size Update
                                     <input type="hidden" name="id" id="id" value="{{$size->id}}">
                                 </div>
 
-                                
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align" for="description">Description<span class=""></span>
                                     </label>
@@ -63,8 +63,8 @@ Size Update
                                         <textarea type="text" name="description" id="description" cols="10" rows="2"  class="form-control">{{$size->description}}</textarea>
                                     </div>
                                 </div>
-                              
-                                
+
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align" for="remarks">Remarks<span class=""></span>
                                     </label>
@@ -72,16 +72,15 @@ Size Update
                                         <textarea type="text" name="remarks" id="remarks" cols="10" rows="2"  class="form-control">{{$size->remarks}}</textarea>
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
-                      
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-12 col-sm-12 text-center">
                                 <a href="{{route('size.index')}}" class="btn btn-primary" type="button">Cancel</a>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" class="btn btn-success">Update</button>
                             </div>
                         </div>
                     </form>
@@ -90,5 +89,5 @@ Size Update
         </div>
     </div>
 
-    
+
 @endsection

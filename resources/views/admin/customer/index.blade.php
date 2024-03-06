@@ -31,12 +31,6 @@ Customer List
             <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 ">
                     <div class="card-box table-responsive">
-                        {{-- notification message --}}
-                        @if(session()->has('msg'))
-                            <div class="text-center alert alert-success">
-                                {{session()->get('msg')}}
-                            </div>
-                        @endif
                         <table id="datatable-responsive" class="table table-striped table-bordered dt-responsive nowrap" cellspacing="0" width="100%">
                             <thead>
                                 <tr>
@@ -47,6 +41,7 @@ Customer List
                                 <th class="all">Phone</th>
                                 <th class="all">Ledger Page</th>
                                 <th class="all">Price Group</th>
+                                <th class="all">Type</th>
                                 <th class="all">Credit Limit</th>
                                 <th class="all">Total Sales</th>
                                 <th class="all">Return</th>
@@ -66,7 +61,8 @@ Customer List
                                         <td>{{$customer->address}}</td>
                                         <td>{{$customer->mobile}}</td>
                                         <td>{{$customer->ledger_page}}</td>
-                                        <td>{{$customer->price_group}}</td>
+                                        <td>{{$customer->priceGroup->name}}</td>
+                                        <td>{{$customer->type}}</td>
                                         @if(empty($customer->credit_limit))
                                             <td></td>
                                         @else
@@ -102,8 +98,19 @@ Customer List
                                         @else
                                             <td class="text-right">{{$customer->previous_due}}/=</td>
                                         @endif
-                                       
-                                        <td> <a href="{{route('customer.edit',$customer->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a> <a href="{{route('customer.delete',$customer->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a> <a href="{{route('customer.view',$customer->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a> </td>
+                                        <td>
+                                            <div class="btn-group btn-group-vertical">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu w-25 h-25" role="menu">
+                                                    <li><a href="{{route('customer.edit',$customer->id)}}" class="btn btn-success btn-sm w-20"><i class="fa fa-edit" ></i></a></li>
+                                                    <li><a href="{{route('customer.delete',$customer->id)}}" class="btn btn-danger btn-sm w-20" id="delete"><i class="fa fa-trash" ></i></a></li>
+                                                    <li><a href="{{route('customer.view',$customer->id)}}" class="btn btn-info btn-sm w-20"><i class="fa fa-eye" ></i></a></li>
+                                                    <li><a href="{{route('customer.ledger',$customer->id)}}" class="btn btn-info btn-sm w-20"><i class="fa fa-book" ></i></a></li>
+                                                    <li><a href="{{route('customer.statement',$customer->id)}}" class="btn btn-info btn-sm w-20"><i class="fa fa-tasks" ></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

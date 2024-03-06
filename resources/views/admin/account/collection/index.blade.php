@@ -66,7 +66,17 @@ Collection List
                                         <td>{{$customer->payment_by}}:{{$customer->bank_title}}</td>
                                         <td class="text-wrap">{{$customer->remarks}}</td>
                                         <td class="text-right">{{$customer->paid_amount}}/=</td>
-                                        <td> <a href="{{route('collection.edit',$customer->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a> <a href="{{route('collection.delete',$customer->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a><a href="{{route('collection.view',$customer->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="{{route('collection.edit',$customer->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a></li>
+                                                    <li><a href="{{route('collection.delete',$customer->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a></li>
+                                                    <li><a href="{{route('collection.view',$customer->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

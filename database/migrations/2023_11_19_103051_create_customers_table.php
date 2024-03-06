@@ -23,7 +23,8 @@ return new class extends Migration
             $table->string('address')->nullable();
             $table->date('birthday')->nullable();
             $table->string('ledger_page')->nullable();
-            $table->string('price_group')->nullable();
+            $table->string('type')->nullable();
+            $table->integer('price_group_id')->nullable();
             $table->string('security')->nullable();
             $table->integer('credit_limit')->nullable();
             $table->integer('advance_payment')->nullable();

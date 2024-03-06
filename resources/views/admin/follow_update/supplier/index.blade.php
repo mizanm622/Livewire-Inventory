@@ -10,9 +10,9 @@ Supplier Follow Update List
 <div class="col-md-12 col-sm-12">
     <div class="x_panel">
         <div class="x_title">
-                <h2> <a href="{{route('supplier.follow.create')}}" class="btn btn-md btn-primary">+Add Supplier Follow Update </a> Supplier Follow Update List<small>Show supplier follow  list from here</small></h2>
+                <h2> <a href="{{route('supplier.follow.create')}}" class="btn btn-md btn-primary">+Add Supplier Following Date </a> Supplier Following Date List</h2>
                 <ul class="nav navbar-right panel_toolbox">
-                   
+
                     <li>
                         <a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                     </li>
@@ -59,10 +59,27 @@ Supplier Follow Update List
                                         <td>{{$supplier->supplier->mobile}}</td>
                                         <td class="text-right">{{$supplier->current_due ?? -$supplier->current_advance}}/=</td>
                                         <td class="text-right">{{$supplier->paid_amount}}/=</td>
-                                        <td class="text-center">{{$supplier->date}}</td>
-                                        <td class="text-center">{{$supplier->date}}</td>
+                                        <td class="text-center">{{date('d-m-Y',strtotime($supplier->date))}}</td>
+                                        @if($supplier->next_date)
+                                        <td class="text-center">{{date('d-m-Y',strtotime($supplier->next_date))}}</td>
+                                        @else
+                                        <td></td>
+                                        @endif
                                         <td class="text-wrap">{{$supplier->remarks}}</td>
-                                        <td> <a href="{{route('supplier.follow.edit',$supplier->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a> <a href="{{route('supplier.follow.delete',$supplier->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a><a href="{{route('supplier.follow.view',$supplier->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li>  <a href="{{route('supplier.follow.edit',$supplier->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a></li>
+                                                    <li> <a href="{{route('supplier.follow.delete',$supplier->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a></li>
+                                                    <li><a href="{{route('supplier.follow.view',$supplier->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></li>
+                                                </ul>
+                                            </div>
+
+
+
+                                        </td>
                                     </tr>
                                 @endforeach
                             </tbody>

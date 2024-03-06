@@ -91,13 +91,6 @@ class WarehouseController extends Controller
     }
 
 
-    public function view($id)
-    {
-        $warehouse = Warehouse::where('id',$id)->first();
-        $products = ProductStore::where('warehouse_id', $id)->get();
-        return view('admin.warehouse.view',get_defined_vars());
-    }
-
     public function status($id, $status)
     {
 

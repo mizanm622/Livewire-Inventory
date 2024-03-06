@@ -50,7 +50,7 @@ Product Update
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="code">Product Code <span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
-                                        <input type="text" id="code" name="code"  value="{{$product->code}}" class="form-control"> 
+                                        <input type="text" id="code" name="code"  value="{{$product->code}}" class="form-control">
                                         <input type="hidden" id="id" name="id"  value="{{$product->id}}">
                                     </div>
                                 </div>
@@ -84,7 +84,7 @@ Product Update
                                            </select>
                                     </div>
                                 </div>
-                              
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="size_id">Size<span class=""></span>
                                     </label>
@@ -153,7 +153,7 @@ Product Update
                                        </select>
                                     </div>
                                 </div>
-                                
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="purches_rate">Purches Rate<span class=""></span>
                                     </label>
@@ -189,7 +189,7 @@ Product Update
                                         <input type="number" id="alert_quantity" name="alert_quantity"  value="{{$product->alert_quantity}}" class="form-control">
                                     </div>
                                 </div>
-                               
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="remarks">Remarks<span class=""></span>
                                     </label>
@@ -203,8 +203,7 @@ Product Update
                         <div class="item form-group">
                             <div class="col-md-12 col-sm-12 text-center">
                                 <a href="{{route('product.index')}}" class="btn btn-primary" type="button">Cancel</a>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" class="btn btn-success">Update</button>
                             </div>
                         </div>
                     </form>
@@ -217,7 +216,7 @@ Product Update
      <script src="{{asset('assets/js/jquery.min.js')}}"></script>
      <script src="{{asset('assets/js/dropify.min.js')}}"></script>
          <script type="text/javascript">
- 
+
          $('.dropify').dropify({
                      messages: {
                          'default': 'Drag and drop',

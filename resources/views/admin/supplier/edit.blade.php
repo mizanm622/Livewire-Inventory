@@ -44,7 +44,7 @@ Supplier Update
                     <form action="{{route('supplier.update')}}" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         @csrf
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12"> 
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="company_name">Company Name <span class=""></span>
                                     </label>
@@ -105,12 +105,12 @@ Supplier Update
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12"> 
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="ledger_page">Ledger Page<span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
-                                        <input type="number" id="ledger_page" name="ledger_page" value="{{$supplier->ledger_page}}"  class="form-control">
+                                        <input type="text" id="ledger_page" name="ledger_page" value="{{$supplier->ledger_page}}"  class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group ">
@@ -173,13 +173,12 @@ Supplier Update
                                 </div>
                             </div>
                         </div>
-                      
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-12 offset-md-3 text-center">
                                 <a href="{{route('supplier.index')}}" class="btn btn-primary" type="button">Cancel</a>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" class="btn btn-success">Update</button>
                             </div>
                         </div>
                     </form>

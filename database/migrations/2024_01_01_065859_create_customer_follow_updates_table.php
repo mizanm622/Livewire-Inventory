@@ -16,6 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('customer_id');
             $table->integer('invoice_no')->nullable();
             $table->date('date')->nullable();
+            $table->date('next_date')->nullable();
             $table->double('previous_due')->nullable();
             $table->double('current_due')->nullable();
             $table->integer('paid_amount')->nullable();

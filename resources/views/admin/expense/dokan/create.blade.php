@@ -44,7 +44,7 @@ Dokan Expense Add
                     <form action="{{route('dokan.expense.store')}}" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         @csrf
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12"> 
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">Date<span class=""></span>
                                     </label>
@@ -60,32 +60,24 @@ Dokan Expense Add
                                     </div>
                                 </div>
 
-                             
+
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="voucher_no">Voucher No<span class=""></span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6">
-                                        <input type="text" id="voucher_no" name="voucher_no"  class="form-control" >
-                                    </div>
-                                </div>
-                                
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="dokan _rent">Dokan Rent	
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="dokan _rent">Dokan Name
                                         <span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
-                                        <input type="text" id="dokan _rent" name="dokan _rent" class="form-control" >
+                                        <input type="text" id="dokan_rent" name="dokan_rent" class="form-control" >
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="rent_amount">Rent Amount	
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="rent_amount">Rent Amount
                                       <span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
                                         <input type="text" id="rent_amount" name="rent_amount" class="form-control" >
                                     </div>
                                 </div>
-                          
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="rent_month">Rent Month
                                     <span class=""></span>
@@ -101,7 +93,7 @@ Dokan Expense Add
                                 </div>
                             </div>
                             <div class="col-lg-6 col-md-6 col-sm-12">
-                                
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="payment_by">Paying By<span class=""></span>
                                     </label>
@@ -134,19 +126,19 @@ Dokan Expense Add
                                         <input type="text" id="payment_amount" name="payment_amount"  class="form-control">
                                     </div>
                                 </div>
-        
+
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="remarks"> Remarks	
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="remarks"> Remarks
                                        <span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
                                         <textarea type="text" name="remarks" id="remarks" cols="10" rows="2"  class="form-control"></textarea>
-                                      
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                      
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-12 col-sm-12 text-center">
@@ -161,5 +153,5 @@ Dokan Expense Add
         </div>
     </div>
 
-    
+
 @endsection

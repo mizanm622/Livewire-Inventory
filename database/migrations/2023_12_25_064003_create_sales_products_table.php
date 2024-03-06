@@ -15,12 +15,13 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id')->nullable();
             $table->unsignedBigInteger('invoice_no')->nullable();
-            $table->integer('warehouse_id')->nullable();
+            $table->integer('product_store_id')->nullable();
             $table->integer('product_id')->nullable();
             $table->string('product_code')->nullable();
             $table->integer('purchase_code')->nullable();
             $table->string('product_name')->nullable();
             $table->string('product_quantity')->nullable();
+            $table->string('product_weight')->nullable();
             $table->integer('product_discount')->nullable();
             $table->integer('product_price')->nullable();
             $table->string('sub_total')->nullable();

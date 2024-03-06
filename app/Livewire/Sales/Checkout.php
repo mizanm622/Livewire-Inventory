@@ -15,26 +15,14 @@ use Livewire\Component;
 
 class Checkout extends Component
 {
-    public $code;
-    public $name;
-    public $price_rate;
-    public $mrp_rate;
-    public $quantity;
+
     public $price_discount;
     public $vat_discount;
-    public $id;
-    public $qty;
-    public $p_qty = 1;
-    public $searches;
-    public $customer_id;
-    public $previous_due;
     public $date;
-    public $warehouse_id;
+    public $product_store_id;
     public $transport_no;
     public $delivery_man;
-    public $prepare;
     public $remarks;
-    public $rowId;
     public $grand_total = 0;
     public $carring;
     public $other_charge;
@@ -50,6 +38,7 @@ class Checkout extends Component
     public $bank_title;
     public $total_vat;
     public $total_discount;
+    public $total_amount_after_discount;
 
 
     public function rules()
@@ -127,14 +116,11 @@ class Checkout extends Component
         //$invoice_no = mt_rand(111111,999999);
         $purchase_code = mt_rand(1111,9999);
 
-
         $validateData = $this->validate();
-        $value = Session::get('supplier');
-
 
         //dd($validateData,$this->total_discount,$this->total_vat, $value, $sales_adv_pay);
 
-
+        $invoice = 0;
          //check salse
         if(Cart::instance('salse')->count()>0)
         {
@@ -142,8 +128,10 @@ class Checkout extends Component
            {
                 $this->total_qty+=$product->qty;
                 $this->product_discount+=$product->options->discount;
+                $this->total_amount_after_discount += ($product->qty-$product->options->discount)*$product->price;
                 foreach( Session::get('customer') as $value)
                 {
+                    $invoice = $value['invoice_no'];
 
                     SalesProduct::insert([
                         'customer_id' =>$value['customer_id'],
@@ -151,12 +139,13 @@ class Checkout extends Component
                         'product_id'=>$product->id,
                         'product_code'=>$product->options->code,
                         'purchase_code'=>$purchase_code,
-                        'warehouse_id'=>$value['warehouse_id'],
+                        'product_store_id'=>$value['product_store_id'],
                         'product_name'=>$product->name,
                         'product_price'=>$product->price,
                         'product_quantity'=>$product->qty,
+                        'product_weight'=>$product->options->weight,
                         'product_discount'=>$product->options->discount,
-                        'sub_total'=>$product->qty*$product->price,
+                        'sub_total'=>($product->qty-$product->options->discount)*$product->price,
                         'date'=>$value['date'],
                     ]);
 
@@ -165,7 +154,7 @@ class Checkout extends Component
                     $product_store = ProductStore::where(
                         [
                         'product_id' => $product->id,
-                        'warehouse_id' => $value['warehouse_id']
+                        'product_store_id' => $value['product_store_id']
                         ]
                         )->first();
 
@@ -219,7 +208,7 @@ class Checkout extends Component
 
                 SalesCustomerInfo::insert([
                     'customer_id'=>$value['customer_id'],
-                    'total_price'=>Cart::instance('salse')->total()-Cart::instance('salse')->tax(),
+                    'total_price'=>$this->total_amount_after_discount,
                     'total_qty'=> $this->total_qty,
                     'product_discount'=>$this->product_discount,
                     'price_discount'=>$this->total_discount,
@@ -233,7 +222,7 @@ class Checkout extends Component
                     'bank_title'=>$validateData['bank_title'],
                     'payment'=>$validateData['payment'],
                     'date'=>$value['date'],
-                    'warehouse_id'=>$value['warehouse_id'],
+                    'product_store_id'=>$value['product_store_id'],
                     'transport_no'=>$value['transport_no'],
                     'delivery_man'=>$value['delivery_man'],
                     'invoice_no'=>$value['invoice_no'],
@@ -258,8 +247,8 @@ class Checkout extends Component
         session()->flash('sales_adv_pay');
 
         $notification=array('msg' => 'Order Successfully Submited!', 'alert-type' => 'info');
-        return redirect()->route('live.sales.create')->with($notification);
-
+        return redirect()->route('sales.invoice',$invoice)->with($notification);
+       
     }
 
     //get discount status
@@ -290,7 +279,15 @@ class Checkout extends Component
             if($sales_old_due || $sales_adv_pay)
             {
                 //dd($sales_adv_pay, $sales_old_due);
-                $this->grand_total=Cart::instance('salse')->total();
+              
+
+                $total_amount =0;
+                foreach(Cart::instance('salse')-> content() as $product)
+                {
+                    $total_amount += ($product->qty-$product->options->discount)*$product->price;
+
+                }
+                $this->grand_total=$total_amount;
 
                 //discount calculation
                 if($this->discount_status)
@@ -379,7 +376,13 @@ class Checkout extends Component
             {
 
                 //dd('without Session');
-                $this->grand_total=Cart::instance('salse')->total();
+                $total_amount =0;
+                foreach(Cart::instance('salse')-> content() as $product)
+                {
+                    $total_amount += ($product->qty-$product->options->discount)*$product->price;
+
+                }
+                $this->grand_total=$total_amount;
 
                 //discount calculation
                 if($this->discount_status)

@@ -60,7 +60,7 @@ Bank Update
                                     </div>
                                     <input type="hidden" name="id" id="id" value="{{$bank->id}}">
                                 </div>
-                                
+
 
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-4 col-sm-4 label-align" for="branch">Branch Name<span class=""></span>
@@ -91,16 +91,15 @@ Bank Update
                                         <textarea type="text" name="remarks" id="remarks" cols="10" rows="2"  class="form-control">{{$bank->remarks}}</textarea>
                                     </div>
                                 </div>
-                               
+
                             </div>
                         </div>
-                      
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-12 col-sm-12 text-center">
                                 <a href="{{route('bank.index')}}" class="btn btn-primary" type="button">Cancel</a>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" class="btn btn-success">Update</button>
                             </div>
                         </div>
                     </form>
@@ -109,5 +108,5 @@ Bank Update
         </div>
     </div>
 
-    
+
 @endsection

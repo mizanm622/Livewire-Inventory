@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AllReportController;
 use App\Http\Controllers\BankController;
 use App\Http\Controllers\BankExpenseController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CarringExpenseController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CollectionController;
@@ -12,6 +14,7 @@ use App\Http\Controllers\DokanExpenseController;
 use App\Http\Controllers\EmployeeController;
 use App\Http\Controllers\ExpenseCategoryController;
 use App\Http\Controllers\ExpenseController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LabourExpenseController;
 use App\Http\Controllers\MonthlyBonusController;
 use App\Http\Controllers\MonthlyBonusCountController;
@@ -25,7 +28,9 @@ use App\Http\Controllers\SalaryExpenseController;
 use App\Http\Controllers\SalesController;
 use App\Http\Controllers\ShowDueController;
 use App\Http\Controllers\SizeController;
+use App\Http\Controllers\StoreController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\SummaryReportController;
 use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\SupplierDueController;
 use App\Http\Controllers\SupplierFollowUpdateController;
@@ -33,11 +38,12 @@ use App\Http\Controllers\UnitController;
 use App\Http\Controllers\WarehouseController;
 use App\Http\Controllers\YearlyBonusController;
 use App\Http\Controllers\YearlyBonusCountController;
-use App\Livewire\Brand\Index;
-use App\Livewire\Counter;
 use App\Livewire\Purchase\Checkout;
+use App\Livewire\Purchase\Index;
 use App\Models\CustomerFollowUpdate;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Counter;
+
 
 
 /*
@@ -68,18 +74,18 @@ Route::get('/', function () {
 
 Route::get('permisssion','App\Http\Controllers\HomeController@index');
 
-Route::get('/brand', App\Livewire\Brand\Index::class)->name('brand');
-
 //Route::get('/counter', Counter::class);
 
 Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])->group(function ()
 {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        return view('admin.home');
         //return view('admin.home');
     })->name('dashboard');
 
-    //customers route
+    Route::get('/brand', App\Livewire\Brand\Index::class)->name('brand');
+
+ //customers route
     Route::get('customer', [CustomerController::class, 'index'])->name('customer.index');
     Route::get('customer/create', [CustomerController::class, 'create'])->name('customer.create');
     Route::post('customer', [CustomerController::class, 'store'])->name('customer.store');
@@ -87,6 +93,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('customer/edit/{id}', [CustomerController::class, 'edit'])->name('customer.edit');
     Route::post('customer/update', [CustomerController::class, 'update'])->name('customer.update');
     Route::get('customer/delete/{id}', [CustomerController::class, 'delete'])->name('customer.delete');
+    Route::get('customer-due/show', [CustomerController::class, 'due'])->name('customer.due.show');
+    Route::get('customer/ledger/{id}', [CustomerController::class, 'ledger'])->name('customer.ledger');
+    Route::get('customer/statement/{id}', [CustomerController::class, 'statement'])->name('customer.statement');
 
     //suppliers route
     Route::get('supplier', [SupplierController::class, 'index'])->name('supplier.index');
@@ -97,7 +106,9 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::post('supplier/update', [SupplierController::class, 'update'])->name('supplier.update');
     Route::get('supplier/delete/{id}', [SupplierController::class, 'delete'])->name('supplier.delete');
     Route::get('supplier/{id}/{status}', [SupplierController::class, 'status'])->name('supplier.status');
-
+    Route::get('supplier-due/show', [SupplierController::class, 'due'])->name('supplier.due.show');
+    Route::get('supplier-ledger/{id}', [SupplierController::class, 'ledger'])->name('supplier.ledger');
+    Route::get('supplier-statement/{id}', [SupplierController::class, 'statement'])->name('supplier.statement');
     //category route
     Route::get('category', [CategoryController::class, 'index'])->name('category.index');
     Route::get('category/create', [CategoryController::class, 'create'])->name('category.create');
@@ -114,13 +125,13 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::post('subcategory/update', [SubCategoryController::class, 'update'])->name('subcategory.update');
     Route::get('subcategory/delete/{id}', [SubCategoryController::class, 'delete'])->name('subcategory.delete');
 
-    //brand route not use hare
-    // Route::get('brand', [BrandController::class, 'index'])->name('brand.index');
-    // Route::get('brand/create', [BrandController::class, 'create'])->name('brand.create');
-    // Route::post('brand', [BrandController::class, 'store'])->name('brand.store');
-    // Route::get('brand/edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
-    // Route::post('brand/update', [BrandController::class, 'update'])->name('brand.update');
-    // Route::get('brand/delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
+    //brand route
+    Route::get('brand', [BrandController::class, 'index'])->name('brand.index');
+    Route::get('brand/create', [BrandController::class, 'create'])->name('brand.create');
+    Route::post('brand', [BrandController::class, 'store'])->name('brand.store');
+    Route::get('brand/edit/{id}', [BrandController::class, 'edit'])->name('brand.edit');
+    Route::post('brand/update', [BrandController::class, 'update'])->name('brand.update');
+    Route::get('brand/delete/{id}', [BrandController::class, 'delete'])->name('brand.delete');
 
     //unit route
     Route::get('unit', [UnitController::class, 'index'])->name('unit.index');
@@ -138,26 +149,35 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::post('size/update', [SizeController::class, 'update'])->name('size.update');
     Route::get('size/delete/{id}', [SizeController::class, 'delete'])->name('size.delete');
 
+    //store route
+    Route::get('store', [StoreController::class, 'index'])->name('store.index');
+    Route::get('store/create', [StoreController::class, 'create'])->name('store.create');
+    Route::post('store', [StoreController::class, 'store'])->name('store.store');
+    Route::get('store/view/{id}', [StoreController::class, 'view'])->name('store.view');
+    Route::get('store/edit/{id}', [StoreController::class, 'edit'])->name('store.edit');
+    Route::post('store/update', [StoreController::class, 'update'])->name('store.update');
+    Route::get('store/delete/{id}', [StoreController::class, 'delete'])->name('store.delete');
+    Route::get('store/{id}/{status}', [StoreController::class, 'status'])->name('store.status');
+
     //warehouse route
     Route::get('warehouse', [WarehouseController::class, 'index'])->name('warehouse.index');
     Route::get('warehouse/create', [WarehouseController::class, 'create'])->name('warehouse.create');
     Route::post('warehouse', [WarehouseController::class, 'store'])->name('warehouse.store');
-    Route::get('warehouse/view/{id}', [WarehouseController::class, 'view'])->name('warehouse.view');
     Route::get('warehouse/edit/{id}', [WarehouseController::class, 'edit'])->name('warehouse.edit');
     Route::post('warehouse/update', [WarehouseController::class, 'update'])->name('warehouse.update');
     Route::get('warehouse/delete/{id}', [WarehouseController::class, 'delete'])->name('warehouse.delete');
     Route::get('warehouse/{id}/{status}', [WarehouseController::class, 'status'])->name('warehouse.status');
 
-     //price group route
-     Route::get('price_group', [PriceGroupController::class, 'index'])->name('price_group.index');
-     Route::get('price_group/create', [PriceGroupController::class, 'create'])->name('price_group.create');
-     Route::post('price_group', [PriceGroupController::class, 'store'])->name('price_group.store');
-     Route::get('price_group/edit/{id}', [PriceGroupController::class, 'edit'])->name('price_group.edit');
-     Route::get('price_group/add-product/{id}', [PriceGroupController::class, 'add'])->name('price_group.add');
-     Route::post('price_group/store-product', [PriceGroupController::class, 'storeProduct'])->name('price_group.store.product');
-     Route::get('price_group/show/{id}', [PriceGroupController::class, 'show'])->name('price_group.show');
-     Route::post('price_group/update', [PriceGroupController::class, 'update'])->name('price_group.update');
-     Route::get('price_group/delete/{id}', [PriceGroupController::class, 'delete'])->name('price_group.delete');
+    //price group route
+    Route::get('price_group', [PriceGroupController::class, 'index'])->name('price_group.index');
+    Route::get('price_group/create', [PriceGroupController::class, 'create'])->name('price_group.create');
+    Route::post('price_group', [PriceGroupController::class, 'store'])->name('price_group.store');
+    Route::get('price_group/edit/{id}', [PriceGroupController::class, 'edit'])->name('price_group.edit');
+    Route::get('price_group/add-product/{id}', [PriceGroupController::class, 'add'])->name('price_group.add');
+    Route::post('price_group/store-product', [PriceGroupController::class, 'storeProduct'])->name('price_group.store.product');
+    Route::get('price_group/show/{id}', [PriceGroupController::class, 'show'])->name('price_group.show');
+    Route::post('price_group/update', [PriceGroupController::class, 'update'])->name('price_group.update');
+    Route::get('price_group/delete/{id}', [PriceGroupController::class, 'delete'])->name('price_group.delete');
 
     //price group route
     Route::get('bank', [BankController::class, 'index'])->name('bank.index');
@@ -195,7 +215,6 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
      Route::get('product/gallery', [ProductController::class, 'gallery'])->name('product.gallery');
 
     //purchase route
-    Route::get('purchase/invoice', [PurchaseController::class, 'pdfGenerator'])->name('purchase.invoice');
     Route::get('purchase', [PurchaseController::class, 'index'])->name('purchase.index');
     Route::get('purchase/create', [PurchaseController::class, 'create'])->name('purchase.create');
     Route::post('purchase', [PurchaseController::class, 'sessionStore'])->name('session.store');
@@ -203,34 +222,58 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('purchase/view/{invoice}', [PurchaseController::class, 'view'])->name('purchase.view');
     Route::get('purchase/edit/{id}', [PurchaseController::class, 'edit'])->name('purchase.edit');
     Route::post('purchase/update', [PurchaseController::class, 'update'])->name('purchase.update');
-    Route::get('purchase/delete/{id}', [PurchaseController::class, 'delete'])->name('purchase.delete');
-    Route::get('purchase/gallery', [PurchaseController::class, 'gallery'])->name('purchase.gallery');
+    Route::get('purchase/delete/{invoice}', [PurchaseController::class, 'delete'])->name('purchase.delete');
+    Route::post('purchase/supplier/search', [PurchaseController::class, 'searchSupplier'])->name('purchase.search');
+
+
 
      //purchase return route
     Route::get('purchase/return', [PurchaseController::class, 'returnIndex'])->name('purchase.return.index');
-    Route::get('purchase/return/create', [PurchaseController::class, 'returnCreate'])->name('purchase.return.create');
-    Route::post('purchase/return', [PurchaseController::class, 'sessionReturnStore'])->name('session.return.store');
-    Route::post('purchase/return/store', [PurchaseController::class, 'returnStore'])->name('purchase.return.store');
-    Route::get('purchase/return/edit/{id}', [PurchaseController::class, 'returnEdit'])->name('purchase.return.edit');
+    Route::get('purchase/return/view/{invoice}/{id}', [PurchaseController::class, 'returnView'])->name('purchase.return.view');
     Route::get('purchase/return/delete/{id}', [PurchaseController::class, 'returnDelete'])->name('purchase.return.delete');
+    Route::get('purchase/invoice/pdf/{invoice}', [PurchaseController::class, 'pdfDownload'])->name('purchase.invoice');
 
-    Route::get('test', [PurchaseController::class, 'testCart'])->name('purchase.test');
+    //livewire purchase return route
+    Route::get('/live/purchase/return/create', App\Livewire\PurchaseReturn\Index::class)->name('live.purchase.return.create');
+    Route::get('/live/purchase/return/checkout', App\Livewire\PurchaseReturn\Checkout::class)->name('live.purchase.return.checkout');
 
 
     //livewire purchase route
     Route::get('/live/purchase/create', App\Livewire\Purchase\Index::class)->name('live.purchase.create');
     Route::get('/live/purchase/checkout', App\Livewire\Purchase\Checkout::class)->name('live.purchase.checkout');
 
-     //livewire Sales route
-     Route::get('/live/sales/create', App\Livewire\Sales\Index::class)->name('live.sales.create');
-     Route::get('/live/sales/checkout', App\Livewire\Sales\Checkout::class)->name('live.sales.checkout');
-
 
     //Sales route
-     Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
-     Route::get('sales/view/{invoice}', [SalesController::class, 'view'])->name('sales.view');
+    Route::get('sales', [SalesController::class, 'index'])->name('sales.index');
+    Route::get('sales/view/{invoice}', [SalesController::class, 'view'])->name('sales.view');
+    Route::get('sales/delete/{invoice}', [SalesController::class, 'delete'])->name('sales.delete');
+    Route::post('sales/customer/search', [SalesController::class, 'searchCustomer'])->name('sales.search');
+    Route::get('sales/invoice/pdf/{invoice}', [SalesController::class, 'pdfDownload'])->name('sales.invoice');
+    //Sales Report route
+    Route::get('sales/report', [AllReportController::class, 'selse'])->name('sales.report');
 
+    // Sales PDF report generator route
+    Route::get('sales/customer/report/pdf/{start}/{end}/{id}', [AllReportController::class, 'salesCustomerReportDownload'])->name('sales.customer.report.pdf');
+    Route::get('sales/all/report/pdf/{start}/{end}', [AllReportController::class, 'salesAllReportDownload'])->name('sales.all.report.pdf');
 
+    //Purchase Report route
+    Route::get('purchase/report', [AllReportController::class, 'purchase'])->name('purchase.report');
+    // PDF Purchase report generator route
+    Route::get('purchase/supplier/report/pdf/{start}/{end}/{id}', [AllReportController::class, 'purchaseSupplierReportDownload'])->name('purchase.supplier.report.pdf');
+    Route::get('purchase/all/report/pdf/{start}/{end}', [AllReportController::class, 'purchaseAllReportDownload'])->name('purchase.all.report.pdf');
+
+    //livewire Sales route
+    Route::get('/live/sales/create', App\Livewire\Sales\Index::class)->name('live.sales.create');
+    Route::get('/live/sales/checkout', App\Livewire\Sales\Checkout::class)->name('live.sales.checkout');
+
+    //Sales Return route
+    Route::get('sales/return', [SalesController::class, 'returnIndex'])->name('sales.return.index');
+    Route::get('sales/return/view/{invoice}', [SalesController::class, 'returnView'])->name('sales.return.view');
+    Route::get('sales/return/delete/{invoice}', [SalesController::class, 'returnDelete'])->name('sales.return.delete');
+
+    //livewire Sales return route
+    Route::get('/live/sales/return/create', App\Livewire\SalesReturn\Index::class)->name('live.sales.return.create');
+    Route::get('/live/sales/return/checkout', App\Livewire\SalesReturn\Checkout::class)->name('live.sales.return.checkout');
 
     //account/collection route
     Route::get('collection', [CollectionController::class, 'index'])->name('collection.index');
@@ -240,16 +283,25 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('collection/edit/{id}', [CollectionController::class, 'edit'])->name('collection.edit');
     Route::post('collection/update', [CollectionController::class, 'update'])->name('collection.update');
     Route::get('collection/delete/{id}', [CollectionController::class, 'delete'])->name('collection.delete');
+    Route::get('collection/report', [CollectionController::class, 'report'])->name('collection.report');
 
+    //  collection PDF report generator route
+    Route::get('collection/customer/report/pdf/{start}/{end}/{id}', [AllReportController::class, 'collectionCustomerReportDownload'])->name('collection.customer.report.pdf');
+    Route::get('collection/all/report/pdf/{start}/{end}', [AllReportController::class, 'collectionAllReportDownload'])->name('collection.all.report.pdf');
 
-     //account/payment route
-     Route::get('payment', [PaymentController::class, 'index'])->name('payment.index');
-     Route::get('payment/create', [PaymentController::class, 'create'])->name('payment.create');
-     Route::post('payment', [PaymentController::class, 'store'])->name('payment.store');
-     Route::get('payment/view/{id}', [PaymentController::class, 'view'])->name('payment.view');
-     Route::get('payment/edit/{id}', [PaymentController::class, 'edit'])->name('payment.edit');
-     Route::post('payment/update', [PaymentController::class, 'update'])->name('payment.update');
-     Route::get('payment/delete/{id}', [PaymentController::class, 'delete'])->name('payment.delete');
+    //account/payment route
+    Route::get('payment', [PaymentController::class, 'index'])->name('payment.index');
+    Route::get('payment/create', [PaymentController::class, 'create'])->name('payment.create');
+    Route::post('payment', [PaymentController::class, 'store'])->name('payment.store');
+    Route::get('payment/view/{id}', [PaymentController::class, 'view'])->name('payment.view');
+    Route::get('payment/edit/{id}', [PaymentController::class, 'edit'])->name('payment.edit');
+    Route::post('payment/update', [PaymentController::class, 'update'])->name('payment.update');
+    Route::get('payment/delete/{id}', [PaymentController::class, 'delete'])->name('payment.delete');
+    Route::get('payment/report', [PaymentController::class, 'report'])->name('payment.report');
+
+    // payment PDF report generator route
+    Route::get('payment/supplier/report/pdf/{start}/{end}/{id}', [AllReportController::class, 'paymentSupplierReportDownload'])->name('payment.supplier.report.pdf');
+    Route::get('payment/all/report/pdf/{start}/{end}', [AllReportController::class, 'paymentAllReportDownload'])->name('payment.all.report.pdf');
 
 
     //expense route
@@ -259,6 +311,10 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('expense/edit/{id}', [ExpenseController::class, 'edit'])->name('expense.edit');
     Route::post('expense/update', [ExpenseController::class, 'update'])->name('expense.update');
     Route::get('expense/delete/{id}', [ExpenseController::class, 'delete'])->name('expense.delete');
+    Route::get('expense/report', [ExpenseController::class, 'report'])->name('expense.report');
+
+    // expense PDF report generator route
+    Route::get('expense/report/pdf/{start}/{end}/{id}', [ExpenseController::class, 'expenseReportDownload'])->name('expense.report.pdf');
 
     //salary expense route
     Route::get('salary/expense', [SalaryExpenseController::class, 'index'])->name('salary.expense.index');
@@ -354,7 +410,7 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
     Route::get('quotation/create', [QuotationController::class, 'create'])->name('quotation.create');
     Route::get('quotation/{id}/view', [QuotationController::class, 'view'])->name('quotation.view');
 
-    //bonus count route
+    //monthly bonus count route
     Route::get('bonus', [MonthlyBonusCountController::class, 'index'])->name('bonus.index');
     Route::get('bonus/create', [MonthlyBonusCountController::class, 'create'])->name('bonus.create');
     Route::post('bonus', [MonthlyBonusCountController::class, 'store'])->name('bonus.store');
@@ -380,4 +436,16 @@ Route::middleware(['auth:sanctum',config('jetstream.auth_session'),'verified',])
      //yearly bonus route
     Route::get('yearly/bonus/list', [YearlyBonusController::class, 'show'])->name('yearly.bonus.show');
 
+    //daily summary routes
+    Route::get('daily/report', [SummaryReportController::class, 'dailyReport'])->name('daily.report');
+     //daily pdf summary routes
+    Route::get('daily/report/pdf/{date}', [SummaryReportController::class, 'dailyReportDownload'])->name('daily.report.pdf');
+     //monthly summary routes
+    Route::get('monthly/report', [SummaryReportController::class, 'monthlyReport'])->name('monthly.report');
+      //monthly pdf summary routes
+    Route::get('monthly/report/pdf/{date}', [SummaryReportController::class, 'monthlyReportDownload'])->name('monthly.report.pdf');
+    //yearly summary routes
+    Route::get('yearly/report', [SummaryReportController::class, 'yearlyReport'])->name('yearly.report');
+     //yearly pdf summary routes
+    Route::get('yearly/report/pdf/{date}', [SummaryReportController::class, 'yearlyReportDownload'])->name('yearly.report.pdf');
 });

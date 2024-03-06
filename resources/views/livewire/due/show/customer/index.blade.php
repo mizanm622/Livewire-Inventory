@@ -40,7 +40,7 @@
                                     <div class="form-group">
                                         <div class="form-group ">
                                             <input type="date" name="date" id="date" class="form-control" wire:model="date">
-                                            
+
                                         </div>
                                     </div>
                                 </div>
@@ -53,7 +53,7 @@
                                             <option value=""></option>
                                             @foreach ($customers as $customer)
                                                 <option value="{{$customer->id}}">
-                                                    {{$customer->name}} |
+                                                    {{$customer->name}} -
                                                     {{$customer->address}}
                                                 </option>
                                             @endforeach
@@ -61,7 +61,7 @@
                                     </div>
                                 </div>
                             </div>
-                           
+
                             <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="customer-search-button pt-4">
                                     <div class="form-group">
@@ -69,7 +69,7 @@
                                         <button type="button" wire:click="resetCustomer" class="btn btn-danger">Reset</button>
                                     </div>
                                 </div>
-                                
+
                             </div>
                         </div>
                     </form>
@@ -89,9 +89,9 @@
                                             </tr>
                                         </thead>
                                         <tbody>
-                                           
-                                                
-                                           
+
+
+
                                             @forelse ($due_customer as $customer)
                                             <tr>
                                                 <td>{{date('d-m-Y', strtotime($customer->date))}}</td>
@@ -109,7 +109,7 @@
                                         </tbody>
                                     </table>
                                 @else
-                                    
+
                                 @endif
                             </div>
                         </div>
@@ -125,50 +125,50 @@
 <script>
 
     $(document).ready(function () {
-      
-       
+
+
         $('#due_customer_search').select2({
         placeholder: 'Select customer from here',
         });
-        
+
         $('#due_customer_search').on('change', function (e) {
             //@this.searchCustomer(e.target.value);
             var data = $('#due_customer_search').select2("val");
             @this.set('get_customer_id', data);
-        });  
-      
+        });
+
         // $('#due_customer_search').on('change', function () {
         //     $('#due_supplier_search').reset('').trigger('change');
-            
-        // });
-      
 
-       
-       
-       
-    
-    }); 
+        // });
+
+
+
+
+
+
+    });
 
     $(document).ready(function () {
-          
+
            $('#due_supplier_search').select2({
             placeholder: 'Select supplier from here',
            });
 
            $('#due_supplier_search').on('change', function (e){
                @this.searchSupplier(e.target.value);
-               
+
             });
-        
+
             // $('#due_supplier_search').on('change', function (){
             //     $('#due_customer_search').reset('').trigger('change');
-               
+
             // });
-          
-        
+
+
             //$('#due_customer_search').val([]).trigger('change');
-    }); 
+    });
 
     </script>
-    
+
 @endpush

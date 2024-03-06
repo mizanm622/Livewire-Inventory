@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+
+
 class SalesCustomerInfo extends Model
 {
     use HasFactory;
@@ -19,5 +21,11 @@ class SalesCustomerInfo extends Model
     public function customer()
     {
         return $this->belongsTo( customer::class, 'customer_id');
-    } 
+    }
+
+    public function store()
+    {
+        return $this->belongsTo( Store::class, 'product_store_id');
+    }
+
 }

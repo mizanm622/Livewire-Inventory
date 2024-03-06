@@ -29,12 +29,23 @@ class LabourExpenseController extends Controller
             'payment_amount' => ['max:100'],
             'payment_by' => ['max:100'],
             'remarks' => ['max:1000'],
-           
+
         ]);
+
+         // generate invoice number
+         $voucher_no = LabourExpense::orderBy('id','DESC')->first();
+         if(!$voucher_no)
+         {
+             $voucher_no= 01;
+         }
+         else
+         {
+             $voucher_no = $voucher_no->voucher_no+1;
+         }
 
         LabourExpense::insert([
             'date' => $request->date,
-            'voucher_no' => $request->voucher_no,
+            'voucher_no' => $voucher_no,
             'purpose' => $request->purpose,
             'amount' => $request->amount,
             'receive' => $request->receive,
@@ -50,7 +61,7 @@ class LabourExpenseController extends Controller
     }
     public function edit($id)
     {
-       
+
         $labour_expense = LabourExpense::where('id',$id)->first();
 
         return view('admin.expense.labour.edit', get_defined_vars());
@@ -67,9 +78,9 @@ class LabourExpenseController extends Controller
             'payment_amount' => ['max:100'],
             'payment_by' => ['max:100'],
             'remarks' => ['max:1000'],
-           
+
         ]);
-        
+
         LabourExpense::where('id',$request->id)->update([
             'date' => $request->date,
             'voucher_no' => $request->voucher_no,
@@ -89,7 +100,7 @@ class LabourExpenseController extends Controller
 
     public function delete($id)
     {
-       
+
         LabourExpense::where('id',$id)->delete();
         $alert = array('msg' => 'Labour Expense Successfully Deleted', 'alert-type' => 'warning');
         return redirect()->route('labour.expense.index')->with($alert);

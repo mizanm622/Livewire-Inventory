@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('bank_expenses', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('bank_id');
             $table->date('date')->nullable();
             $table->string('voucher_no')->nullable();
-            $table->string('bank_name')->nullable();
             $table->integer('profit_amount')->nullable();
             $table->string('profit_month')->nullable();
             $table->string('other_charge')->nullable();

@@ -44,7 +44,7 @@ Customer Update
                     <form action="{{route('customer.update')}}" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         @csrf
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12"> 
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="name">Customer Name <span class=""></span>
                                     </label>
@@ -110,7 +110,7 @@ Customer Update
                                     </div>
                                 </div>
                                 <div class="item form-group ">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="photo">Customer Photo 
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="photo">Customer Photo
                                     </label>
                                     <div class="col-md-6 col-sm-6">
                                         <input type="file" id="photo" name="photo"  class="dropify form-control">
@@ -121,7 +121,7 @@ Customer Update
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 col-md-6 col-sm-12"> 
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="email">Email<span class=""></span>
                                     </label>
@@ -136,18 +136,23 @@ Customer Update
                                         <input type="text" id="ledger_page" name="ledger_page" value="{{$customer->ledger_page}}"  class="form-control">
                                     </div>
                                 </div>
-                               
+
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="price_group">Price Group<span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
                                       <select name="price_group" id="price_group"  class="form-control">
-                                        <option value="Personal" @if($customer->price_group == "Personal") selected="" @endif>Personal</option>
-                                        <option value="General" @if($customer->price_group == "General") selected="" @endif>General</option>
-                                        <option value="Reguler" @if($customer->price_group == "Reguler") selected="" @endif>Reguler</option>
-                                        <option value="MRP" @if($customer->price_group == "MRP") selected="" @endif>MRP</option>
-                                        <option value="Sub Dealer" @if($customer->price_group == "Sub Dealer") selected="" @endif>Subdealer</option>
+                                        @foreach ($price_groups as $price_group)
+                                            <option value="{{$price_group->id}}" @if($price_group->id == $customer->price_group_id) selected="" @endif>{{$price_group->name}}</option>
+                                        @endforeach
                                       </select>
+                                    </div>
+                                </div>
+                                <div class="item form-group ">
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="security">Type<span class=""></span>
+                                    </label>
+                                    <div class="col-md-6 col-sm-6">
+                                        <input type="text" id="type" name="type" value="{{$customer->type}}" class="form-control">
                                     </div>
                                 </div>
                                 <div class="item form-group ">
@@ -157,9 +162,6 @@ Customer Update
                                         <input type="text" id="security" name="security" value="{{$customer->security}}"  class="form-control">
                                     </div>
                                 </div>
-                                
-                               
-                               
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="credit_limit">Credit Limit<span class=""></span>
                                     </label>
@@ -168,7 +170,7 @@ Customer Update
                                     </div>
                                 </div>
 
-                                
+
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="advance_payment">Advance Payment<span class=""></span>
                                     </label>
@@ -176,7 +178,7 @@ Customer Update
                                         <input type="number" id="advance_payment" name="advance_payment" value="{{$customer->advance_payment}}" class="form-control">
                                     </div>
                                 </div>
-                                
+
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="previous_due">Previous Due<span class=""></span>
                                     </label>
@@ -184,7 +186,7 @@ Customer Update
                                         <input type="number" id="previous_due" name="previous_due" value="{{$customer->previous_due}}" class="form-control">
                                     </div>
                                 </div>
-                                
+
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="remarks">Remarks<span class=""></span>
                                     </label>
@@ -200,14 +202,14 @@ Customer Update
                             </div>
                             <div class="clearfix"></div>
                             <div class="row">
-                                <div class="col-lg-6 col-md-6 col-sm-12"> 
+                                <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="item form-group ">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_name">Guarantor Name<span class=""></span>
                                         </label>
                                         <div class="col-md-6 col-sm-6">
                                             <input type="text" id="guarantor_name" name="guarantor_name" value="{{$customer->guarantor_name}}"  class="form-control">
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="item form-group ">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_company_name">Company Name<span class=""></span>
                                         </label>
@@ -251,7 +253,7 @@ Customer Update
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-lg-6 col-md-6 col-sm-12"> 
+                                <div class="col-lg-6 col-md-6 col-sm-12">
                                     <div class="item form-group ">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_mobile">Mobile Number<span class=""></span>
                                         </label>
@@ -266,7 +268,7 @@ Customer Update
                                             <input type="text" id="guarantor_phone" name="guarantor_phone"  value="{{$customer->guarantor_phone}}" class="form-control">
                                         </div>
                                     </div>
-                                   
+
                                     <div class="item form-group ">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_email">Email<span class=""></span>
                                         </label>
@@ -274,7 +276,7 @@ Customer Update
                                             <input type="email" id="guarantor_email" name="guarantor_email" value="{{$customer->guarantor_email}}" class="form-control">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="item form-group ">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_security">Security<span class=""></span>
                                         </label>
@@ -282,7 +284,7 @@ Customer Update
                                             <input type="text" id="guarantor_security" name="guarantor_security" value="{{$customer->guarantor_security}}"  class="form-control">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="item form-group ">
                                         <label class="col-form-label col-md-3 col-sm-3 label-align" for="guarantor_remarks">Remarks<span class=""></span>
                                         </label>
@@ -299,7 +301,7 @@ Customer Update
                                             <input type="hidden" id="guarantor_old_photo" name="guarantor_old_photo" value="{{$customer->guarantor_photo}}">
                                         </div>
                                     </div>
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -307,8 +309,7 @@ Customer Update
                         <div class="item form-group">
                             <div class="col-md-6 col-sm-12 offset-md-3 text-center">
                                 <a href="{{route('customer.index')}}" class="btn btn-primary" type="button">Cancel</a>
-                                <button class="btn btn-primary" type="reset">Reset</button>
-                                <button type="submit" class="btn btn-success">Submit</button>
+                                <button type="submit" class="btn btn-success">Update</button>
                             </div>
                         </div>
                     </form>

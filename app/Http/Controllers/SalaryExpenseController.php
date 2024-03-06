@@ -31,15 +31,28 @@ class SalaryExpenseController extends Controller
             'payment_amount' => [ 'max:100'],
             'payment_by' => ['max:100'],
             'remarks' => ['max:1000'],
-           
+
         ]);
+
+        // generate invoice number
+        $voucher_no = SalaryExpense::orderBy('id','DESC')->first();
+        if(!$voucher_no)
+        {
+            $voucher_no= 01;
+        }
+        else
+        {
+            $voucher_no = $voucher_no->voucher_no+1;
+        }
+
+
 
         SalaryExpense::insert([
             'date' => $request->date,
-            'voucher_no' => $request->voucher_no,
+            'voucher_no' => $voucher_no,
             'employee_id' => $request->employee_id,
             'salary_amount' => $request->salary_amount,
-            'salary_month' => $request->salary_month,
+            'salary_month' => $request->salary_month.'-'.date('y', strtotime($request->date)),
             'payment_amount' => $request->payment_amount,
             'payment_by' => $request->payment_by,
             'remarks' => $request->remarks,
@@ -70,9 +83,9 @@ class SalaryExpenseController extends Controller
             'payment_amount' => [ 'max:100'],
             'payment_by' => ['max:100'],
             'remarks' => ['max:1000'],
-           
+
         ]);
-        
+
         SalaryExpense::where('id',$request->id)->update([
             'date' => $request->date,
             'voucher_no' => $request->voucher_no,
@@ -82,7 +95,7 @@ class SalaryExpenseController extends Controller
             'payment_amount' => $request->payment_amount,
             'payment_by' => $request->payment_by,
             'remarks' => $request->remarks,
-            
+
         ]);
 
         $alert = array('msg' => 'Salary Expense Successfully Update', 'alert-type' => 'info');
@@ -93,7 +106,7 @@ class SalaryExpenseController extends Controller
 
     public function delete($id)
     {
-       
+
         SalaryExpense::where('id',$id)->delete();
         $alert = array('msg' => 'Salary Expense Successfully Deleted', 'alert-type' => 'warning');
         return redirect()->route('salary.expense.index')->with($alert);

@@ -65,7 +65,17 @@ Payment List
                                         <td>{{$supplier->payment_by}}:{{$supplier->bank_title}}</td>
                                         <td class="text-wrap">{{$supplier->remarks}}</td>
                                         <td class="text-right">{{$supplier->paid_amount}}/=</td>
-                                        <td> <a href="{{route('payment.edit',$supplier->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a> <a href="{{route('payment.delete',$supplier->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a><a href="{{route('payment.view',$supplier->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></td>
+                                        <td>
+                                            <div class="btn-group">
+                                                <button type="button" class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown">
+                                                Action <span class="caret"></span></button>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="{{route('payment.edit',$supplier->id)}}" class="btn btn-success"><i class="fa fa-edit" ></i></a></li>
+                                                    <li><a href="{{route('payment.delete',$supplier->id)}}" class="btn btn-danger" id="delete"><i class="fa fa-trash" ></i></a></i></a></li>
+                                                    <li><a href="{{route('payment.view',$supplier->id)}}" class="btn btn-info"><i class="fa fa-eye" ></i></a></li>
+                                                </ul>
+                                            </div>
+                                        </td>
                                     </tr>
                                 @endforeach
 

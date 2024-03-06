@@ -19,10 +19,15 @@ class SalesProduct extends Model
     public function customer()
     {
         return $this->belongsTo( customer::class, 'customer_id');
-    } 
-    
+    }
+
     public function product()
     {
         return $this->belongsTo( Product::class, 'product_id');
+    }
+
+    public function store()
+    {
+        return $this->belongsTo( Store::class, 'product_store_id');
     }
 }

@@ -53,6 +53,7 @@ class Checkout extends Component
     public $bank_title;
     public $total_vat;
     public $total_discount;
+    public $total_amount_after_discount;
 
 
     public function rules()
@@ -134,7 +135,7 @@ class Checkout extends Component
         $value = Session::get('supplier');
 
        // dd($validateData,$this->total_discount,$this->total_vat, $value );
-
+        $invoice = 0;
 
 
         if(Cart::instance('purchase')->count()>0)
@@ -143,9 +144,11 @@ class Checkout extends Component
            {
                 $this->total_qty+=$product->qty;
                 $this->product_discount+=$product->options->discount;
+                $this->total_amount_after_discount += ($product->qty-$product->options->discount)*$product->price;
                 foreach( Session::get('supplier') as $value)
                 {
-
+                    $invoice = $value['invoice_no'];
+                   
                     PurchaseProduct::insert(
                         [
                             'supplier_id' =>$value['supplier_id'],
@@ -154,12 +157,13 @@ class Checkout extends Component
                             'product_code'=>$product->options->code,
                             'purchase_code'=>$purchase_code,
                             'warehouse_id'=>$value['warehouse_id'],
+                            'product_store_id'=>$value['product_store_id'],
                             'product_name'=>$product->name,
                             'product_price'=>$product->price,
                             'product_quantity'=>$product->qty,
                             'product_weight'=>$product->options->weight,
                             'product_discount'=>$product->options->discount,
-                            'sub_total'=>$product->qty*$product->price,
+                            'sub_total'=>($product->qty-$product->options->discount)*$product->price,
                             'date'=>$value['date'],
                         ]
                     );
@@ -167,7 +171,7 @@ class Checkout extends Component
                     $product_store = ProductStore::where(
                         [
                             'product_id' => $product->id,
-                            'warehouse_id' => $value['warehouse_id']
+                            'product_store_id' => $value['product_store_id']
                         ]
                         )->first();
 
@@ -181,7 +185,7 @@ class Checkout extends Component
                                 [
                                     'product_id' =>$product->id,
                                     'brand_id' =>$product->options->brand_id,
-                                    'warehouse_id'=>$value['warehouse_id'],
+                                    'product_store_id'=>$value['product_store_id'],
                                     'product_name'=>$product->name,
                                     'product_code'=>$product->options->code,
                                     'product_quantity'=>$product->qty+$product->options->discount,
@@ -232,7 +236,7 @@ class Checkout extends Component
 
                 PurchaseSupplierInfo::insert([
                     'supplier_id'=>$value['supplier_id'],
-                    'total_price'=>Cart::instance('purchase')->total()-Cart::instance('purchase')->tax(),
+                    'total_price'=> $this->total_amount_after_discount,
                     'total_qty'=> $this->total_qty,
                     'product_discount'=>$this->product_discount,
                     'price_discount'=>$this->total_discount,
@@ -247,6 +251,7 @@ class Checkout extends Component
                     'payment'=>$validateData['payment'],
                     'date'=>$value['date'],
                     'warehouse_id'=>$value['warehouse_id'],
+                    'product_store_id'=>$value['product_store_id'],
                     'transport_no'=>$value['transport_no'],
                     'delivery_man'=>$value['delivery_man'],
                     'invoice_no'=>$value['invoice_no'],
@@ -273,7 +278,8 @@ class Checkout extends Component
         session()->flash('adv_pay');
 
         $notification=array('msg' => 'Order Successfully Submited!', 'alert-type' => 'info');
-        return redirect()->route('live.purchase.create')->with($notification);
+        return redirect()->route('purchase.invoice',$invoice)->with($notification);
+        // return redirect()->route('live.purchase.create')->with($notification);
 
     }
 
@@ -303,7 +309,14 @@ class Checkout extends Component
         $pre_due = Session::get('pre_due');
         if($pre_due || $adv_pay)
             {
-                $this->grand_total=Cart::instance('purchase')->total();
+                $total_amount =0;
+                foreach(Cart::instance('purchase')-> content() as $product)
+                {
+                    $total_amount += ($product->qty-$product->options->discount)*$product->price;
+
+                }
+
+                $this->grand_total = $total_amount;
 
                 //discount calculation
                 if($this->discount_status)
@@ -401,7 +414,14 @@ class Checkout extends Component
             {
 
                 //dd('without Session');
-                $this->grand_total=Cart::instance('purchase')->total();
+                $total_amount =0;
+                foreach(Cart::instance('purchase')-> content() as $product)
+                {
+                    $total_amount += ($product->qty-$product->options->discount)*$product->price;
+
+                }
+
+                $this->grand_total = $total_amount;
 
                 //discount calculation
                 if($this->discount_status)

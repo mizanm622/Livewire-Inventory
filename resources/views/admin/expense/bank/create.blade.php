@@ -44,7 +44,7 @@ Bank Expense Add
                     <form action="{{route('bank.expense.store')}}" method="post" enctype="multipart/form-data" id="demo-form2" data-parsley-validate class="form-horizontal form-label-left">
                         @csrf
                         <div class="row">
-                            <div class="col-lg-6 col-md-6 col-sm-12"> 
+                            <div class="col-lg-6 col-md-6 col-sm-12">
                                 <div class="item form-group ">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align">Date<span class=""></span>
                                     </label>
@@ -60,32 +60,26 @@ Bank Expense Add
                                     </div>
                                 </div>
 
-                             
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="voucher_no">Voucher No<span class=""></span>
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="bank_id">Bank Name
                                     </label>
                                     <div class="col-md-6 col-sm-6">
-                                        <input type="text" id="voucher_no" name="voucher_no"  class="form-control" >
-                                    </div>
-                                </div>
-                                
-                                <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="bank_name">Bank Name	
-                                        <span class=""></span>
-                                    </label>
-                                    <div class="col-md-6 col-sm-6">
-                                        <input type="text" id="bank_name" name="bank_name" class="form-control" >
+                                        <select type="text" name="bank_id" id="bank_id" class="form-control">
+                                            @foreach ($banks as $bank)
+                                            <option value="{{$bank->id}}">{{$bank->name}}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="profit_amount">Profit Amount	
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="profit_amount">Profit Amount
                                       <span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
                                         <input type="text" id="profit_amount" name="profit_amount" class="form-control" >
                                     </div>
                                 </div>
-                          
+
                                 <div class="item form-group">
                                     <label class="col-form-label col-md-3 col-sm-3 label-align" for="profit_month">Profit Month
                                     <span class=""></span>
@@ -129,19 +123,19 @@ Bank Expense Add
                                         <input type="text" id="payment_amount" name="payment_amount"  class="form-control">
                                     </div>
                                 </div>
-        
+
                                 <div class="item form-group">
-                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="remarks"> Remarks	
+                                    <label class="col-form-label col-md-3 col-sm-3 label-align" for="remarks"> Remarks
                                        <span class=""></span>
                                     </label>
                                     <div class="col-md-6 col-sm-6">
                                         <textarea type="text" name="remarks" id="remarks" cols="10" rows="2"  class="form-control"></textarea>
-                                      
+
                                     </div>
                                 </div>
                             </div>
                         </div>
-                      
+
                         <div class="ln_solid"></div>
                         <div class="item form-group">
                             <div class="col-md-12 col-sm-12 text-center">
@@ -156,5 +150,5 @@ Bank Expense Add
         </div>
     </div>
 
-    
+
 @endsection
