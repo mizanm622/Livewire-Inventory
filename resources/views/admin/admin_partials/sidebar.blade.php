@@ -180,7 +180,7 @@
               <li><a href="{{route('store.index')}}">Store</a></li>
               <li><a href="{{route('category.index')}}">Category</a></li>
               <li><a href="{{route('subcategory.index')}}">Sub Category</a></li>
-              <li><a href="{{route('brand')}}">Brand</a></li>
+              {{-- <li><a href="{{route('brand')}}">Brand</a></li> --}}
               <li><a href="{{route('price_group.index')}}">Price Group</a></li>
               <li><a href="{{route('bank.index')}}">Bank</a></li>
               <li><a href="{{route('warehouse.index')}}">Warehouse</a></li>

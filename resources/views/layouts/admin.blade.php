@@ -10,6 +10,7 @@
 
     <title>@yield('page-title')</title>
 
+
     <!-- Bootstrap -->
     <link href="{{asset('assets/cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css')}}">
     <link href="{{asset('assets/vendors/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -40,10 +41,13 @@
 
      <!-- Custom CSS -->
     <link href="{{asset('assets/css/style.css')}}" rel="stylesheet">
-   {{-- select2 and css --}}
-   <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 
-   @livewireStyles
+
+    {{-- select2 and css --}}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    @livewireStyles
+
   </head>
 
   <body class="nav-md">
@@ -52,7 +56,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="{{route('dashboard')}}" class="site_title"><img src="{{asset('assets/images/logo.png')}}" alt="Logo" width="50" height="50" class="rounded-circle"> <span>Firoz Enterprise</span></a>
+              <a href="{{route('dashboard')}}" class="site_title"><img src="{{asset('assets/images/brand_logo.png')}}" alt="Logo" width="50" height="50" class="rounded-circle"> <span>Firoz Enterprise</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -94,9 +98,6 @@
         <!-- End footer content -->
       </div>
     </div>
-
-
-
 
     <!-- jQuery -->
     <script src="{{asset('assets/vendors/jquery/dist/jquery.min.js')}}"></script>
@@ -155,15 +156,18 @@
     <script src="{{asset('assets/vendors/pdfmake/build/pdfmake.min.js')}}"></script>
     <script src="{{asset('assets/vendors/pdfmake/build/vfs_fonts.js')}}"></script>
 
+
      {{-- select2 js cdn--}}
      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
     <!-- Custom Theme Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <!-- Custom Theme Scripts -->
     <script src="{{asset('assets/build/js/custom.min.js')}}"></script>
 
+
+
+
     <script>
-      
         // this is for laravel blade
         $(document).on('click','#delete', function(e){
         e.preventDefault();
@@ -204,7 +208,7 @@
         });
     });
 
-    
+
     //this is for livewire component
     window.addEventListener('show-delete-message', event =>{
         $(document).ready(function(){
@@ -247,9 +251,9 @@
             text: "Your file has been deleted.",
             icon: "success"
             });
-
     });
 });
+
 
     </script>
     {{-- alert notification --}}
@@ -257,7 +261,7 @@
         <script >
             var type ="{{Session::get('alert-type','info')}}";
             switch(type){
-              case 'info':
+                    case 'info':
                     toastr.info("{{Session::get('msg')}}");
                     break;
                     case 'success':
@@ -276,11 +280,8 @@
 
         </script>
     @endif
-
-
-
     @livewireScripts
 
-    @stack('script')
+    @stack('scripts')
   </body>
 </html>
