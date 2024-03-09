@@ -1,0 +1,98 @@
+.right_col{
+    height: 160vh;
+  }
+
+span.required {
+    color: red;
+    font-size: 12px;
+}
+
+.nav_title a img {
+    background: #fff;
+
+}
+.guarantor_area{
+    border-left: 2px solid;
+    height: 100%;
+}
+.customer_view_area {
+    margin-top: 15px;
+}
+.title {
+    font-size: 17px;
+    color: #000;
+    padding-left: 12px;
+}
+
+.product_list {
+    height: 10%;
+    padding: 2px;
+    text-align: center;
+    margin: auto;
+}
+
+/* .btn-group ul{
+   width: 20%;
+}
+
+.btn-group ul li a{
+    display: block;
+    width: 20%;
+} */
+.w-20 {
+    padding: 10px 12px;
+}
+input.input-field {
+    width: 60px;
+    height: 30px;
+    border-radius: 0px;
+    text-align: end;
+}
+
+.select2-container{
+    width: 100% !important;
+}
+
+label {
+    background: #2A3F54;
+    color: #fff;
+    text-align: left !important;
+    font-size: 16px;
+}
+
+.follow-lebel {
+    width: 100%;
+    font-size: 13px;
+}
+
+.follow-input {
+    margin-top: 5px;
+    padding: 0px;
+}
+
+
+.in-word-area h4:after {
+    content: '';
+    display: block;
+    clear: both;
+    border: 1px dotted;
+    width: 524px;
+    margin: 0px 69px;
+    border-color: #000;
+}
+.customer-signature-area h4:before {
+    content: '';
+    display: block;
+    clear: both;
+    border: 1px solid #000;
+    width: 140px;
+    margin: 0px 2px;
+}
+.supplier-signature-area h4:before {
+    content: '';
+    display: block;
+    clear: both;
+    border: 1px solid #000;
+    width: 130px;
+    margin-left: 117px;
+}
